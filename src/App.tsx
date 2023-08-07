@@ -1,3 +1,9 @@
+import { Register } from "./pages/Register";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Register />
+    </div>
+  );
 };
