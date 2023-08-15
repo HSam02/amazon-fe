@@ -1,20 +1,33 @@
+import {
+  IAuthResponse,
+  ILoginRequest,
+  IRegisterRequest,
+} from "../utils/Auth/interfaces";
+import { authEndpoints } from "../utils/endpoints";
+import localStorageKeys from "../utils/localStorageKeys";
 import appAxios from "./axios.service";
 
-export interface IRegisterSchema {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  verification: {
-    code: string;
-    token: string;
-  };
-}
-
-export const register = async (reqData: IRegisterSchema) => {
+export const register = async (reqData: IRegisterRequest) => {
   try {
-    const { data } = await appAxios.post("/auth/register", reqData);
-    return data;
+    const { data } = await appAxios.post<IAuthResponse>(
+      authEndpoints.REGISTER,
+      reqData
+    );
+    localStorage.setItem(localStorageKeys.TOKEN_KEY, data.token);
+    return data.user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const login = async (reqData: ILoginRequest) => {
+  try {
+    const { data } = await appAxios.post<IAuthResponse>(
+      authEndpoints.LOGIN,
+      reqData
+    );
+    localStorage.setItem(localStorageKeys.TOKEN_KEY, data.token);
+    return data.user;
   } catch (error) {
     throw error;
   }
@@ -22,7 +35,7 @@ export const register = async (reqData: IRegisterSchema) => {
 
 export const verify = async (email: string) => {
   try {
-    const { data } = await appAxios.get<string>("/auth/verify/" + email);
+    const { data } = await appAxios.get<string>(authEndpoints.VERIFY + email);
     return data;
   } catch (error) {
     throw error;
