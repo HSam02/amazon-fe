@@ -33,6 +33,15 @@ export const login = async (reqData: ILoginRequest) => {
   }
 };
 
+export const getUser = async () => {
+  try {
+    const { data } = await appAxios.get(authEndpoints.GET_USER);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const verify = async (email: string) => {
   try {
     const { data } = await appAxios.get<string>(authEndpoints.VERIFY + email);
@@ -47,7 +56,7 @@ export const checkEmail = async (email: string) => {
     const { data } = await appAxios.get<boolean>(
       authEndpoints.CHECK_EMAIL + email
     );
-    
+
     return data;
   } catch (error) {
     throw error;

@@ -10,7 +10,6 @@ import { IRegisterRequest } from "../../utils/Auth/interfaces";
 import scss from "./Register.module.scss";
 
 export const Register = () => {
-  console.log("Register");
   const [form] = Form.useForm<IRegisterRequest>();
 
   const [currentStep, setCurrentStep] = useState(0);

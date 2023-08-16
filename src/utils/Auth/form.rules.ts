@@ -43,6 +43,10 @@ export const emailRules: Rule[] = [
     pattern: authRegexes.EMAIL,
     message: "Please input valid email!",
   },
+];
+
+export const emailRulesWithCheck: Rule[] = [
+  ...emailRules,
   () => ({
     async validator(_, value: string) {
       if (!value.match(authRegexes.EMAIL)) {

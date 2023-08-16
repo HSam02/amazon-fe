@@ -1,7 +1,7 @@
 import { Button, Form, FormInstance, Input, Space } from "antd";
 import {
   confirmRules,
-  emailRules,
+  emailRulesWithCheck,
   firstNameRules,
   lastNameRules,
   passwordRules,
@@ -17,8 +17,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   form,
   onSubmit,
 }) => {
-  console.log("RegisterForm");
-
   return (
     <Form form={form} onFinish={onSubmit}>
       <Form.Item name="firstName" rules={firstNameRules}>
@@ -27,7 +25,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       <Form.Item name="lastName" rules={lastNameRules}>
         <Input placeholder="lastName" />
       </Form.Item>
-      <Form.Item name="email" rules={emailRules}>
+      <Form.Item name="email" rules={emailRulesWithCheck}>
         <Input placeholder="Email" />
       </Form.Item>
       <Form.Item name="password" rules={passwordRules}>
