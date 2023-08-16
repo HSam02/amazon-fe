@@ -41,3 +41,15 @@ export const verify = async (email: string) => {
     throw error;
   }
 };
+
+export const checkEmail = async (email: string) => {
+  try {
+    const { data } = await appAxios.get<boolean>(
+      authEndpoints.CHECK_EMAIL + email
+    );
+    
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

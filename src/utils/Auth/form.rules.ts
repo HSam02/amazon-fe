@@ -1,4 +1,6 @@
 import { Rule } from "antd/es/form";
+import { checkEmail } from "../../services/auth.service";
+import { authRegexes } from "../regexes";
 
 export const firstNameRules: Rule[] = [
   {
@@ -11,7 +13,7 @@ export const firstNameRules: Rule[] = [
     message: "Please input more than 2 and less than 15 letters",
   },
   {
-    pattern: /^[A-Za-z]+$/,
+    pattern: authRegexes.FIRST_NAME,
     message: "Please input only letters",
   },
 ];
@@ -27,7 +29,7 @@ export const lastNameRules: Rule[] = [
     message: "Please input more than 3 and less than 20 letters",
   },
   {
-    pattern: /^[A-Za-z]+$/,
+    pattern: authRegexes.LAST_NAME,
     message: "Please input only letters",
   },
 ];
@@ -38,9 +40,28 @@ export const emailRules: Rule[] = [
     message: "Please input your email adress!",
   },
   {
-    pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    pattern: authRegexes.EMAIL,
     message: "Please input valid email!",
   },
+  () => ({
+    async validator(_, value: string) {
+      if (!value.match(authRegexes.EMAIL)) {
+        return;
+      }
+      try {
+        const isEmailFree = await checkEmail(value);
+        if (isEmailFree) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(
+            new Error("The Email that you entered is not free!")
+          );
+        }
+      } catch (error) {
+        return Promise.reject(new Error("Error while checking Email"));
+      }
+    },
+  }),
 ];
 
 export const codeRules: Rule[] = [
@@ -49,7 +70,7 @@ export const codeRules: Rule[] = [
     message: "Please input your verification code!",
   },
   {
-    pattern: /^\d{6}$/,
+    pattern: authRegexes.CODE,
     message: "Please input 6 digit number!",
   },
 ];
@@ -65,7 +86,7 @@ export const passwordRules: Rule[] = [
     message: "Please input more than 8 and less than 16 letters",
   },
   {
-    pattern: /^[A-Za-z\d@$!%*?&]+$/,
+    pattern: authRegexes.PASSWORD,
     message:
       "Please input only letters, digits, or special characters from the set @$!%*?&",
   },

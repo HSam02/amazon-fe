@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Statistic, Input, Space } from "antd";
 import { IVerificationForm } from "../../../../utils/Auth/interfaces";
 import { verify } from "../../../../services/auth.service";
-import { codeRules } from "../../../../utils/Auth/form.rules";
+import { codeRules, emailRules } from "../../../../utils/Auth/form.rules";
 
 type EmailVerificationProps = {
   email: string;
@@ -42,7 +42,7 @@ export const EmailVerification: React.FC<EmailVerificationProps> = ({
 
   return (
     <Form form={form} onFinish={onFinish} initialValues={{ email }}>
-      <Form.Item name="email">
+      <Form.Item name="email" rules={emailRules}>
         <Space.Compact style={{ width: "100%" }}>
           <Input
             defaultValue={email}
@@ -70,7 +70,7 @@ export const EmailVerification: React.FC<EmailVerificationProps> = ({
           <Space style={{ width: "100%" }}>
             <Input placeholder="Verification Code" />
             <Statistic.Countdown
-              value={Date.now() + 60 * 1000}
+              value={Date.now() + 2 * 60 * 1000}
               format="m:ss"
               onFinish={() => setToken("")}
             />

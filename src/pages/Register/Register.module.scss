@@ -7,10 +7,15 @@
   align-items: center;
 }
 
+.steps {
+  width: 80vw;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
 .box {
   width: 80vw;
   max-width: 600px;
-  // margin: auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -19,4 +24,11 @@
 .buttons {
   display: flex;
   justify-content: center;
+}
+
+.loading {
+  height: 296px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

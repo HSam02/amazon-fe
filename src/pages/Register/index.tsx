@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import { Steps, Form } from "antd";
+import { useState, useEffect, useMemo } from "react";
+import { Steps, Form, Result, Spin, Button } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { RegisterForm } from "../../components/features/Register/RegisterForm";
 import { EmailVerification } from "../../components/features/Register/EmailVerification";
 import { register } from "../../services/auth.service";
-import { stepsItems } from "../../utils/Auth/steps.items";
+import { getStepsItems } from "../../utils/Auth/steps.items";
+import { ResultStatusType } from "antd/es/result";
 import { IRegisterRequest } from "../../utils/Auth/interfaces";
 import scss from "./Register.module.scss";
 
@@ -15,9 +17,14 @@ export const Register = () => {
   const [registrationData, setRegistrationData] = useState(
     {} as IRegisterRequest
   );
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState<ResultStatusType | "loading">("success");
+
+  const stepsItems = useMemo(() => getStepsItems(status), [status]);
 
   const onSubmit = (values: any) => {
+    if (values.confirm) {
+      delete values.confirm;
+    }
     setRegistrationData((prev) => ({ ...prev, ...values }));
     setCurrentStep((prev) => prev + 1);
   };
@@ -28,11 +35,10 @@ export const Register = () => {
         try {
           setStatus("loading");
           const data = await register(registrationData);
-          setStatus("idle");
+          setStatus("success");
           console.log(data);
         } catch (error) {
           console.error(error);
-        } finally {
           setStatus("error");
         }
       })();
@@ -45,7 +51,7 @@ export const Register = () => {
       <Steps
         current={currentStep}
         items={stepsItems}
-        style={{ width: "80vw", maxWidth: "600px", marginBottom: 20 }}
+        className={scss.steps}
       ></Steps>
       <div className={scss.box}>
         {currentStep === 0 && <RegisterForm form={form} onSubmit={onSubmit} />}
@@ -57,11 +63,25 @@ export const Register = () => {
         )}
         {currentStep === 2 &&
           (status === "loading" ? (
-            <>loading</>
-          ) : status === "error" ? (
-            <>error</>
+            <Spin
+              className={scss.loading}
+              indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />}
+            />
           ) : (
-            <>successful</>
+            <Result
+              status={status as ResultStatusType}
+              title={status}
+              subTitle={`Registration ${
+                status === "error" ? "fail" : status
+              }ed`}
+              extra={
+                status === "error" ? (
+                  <Button type="primary" onClick={() => setCurrentStep(0)}>
+                    Go Back
+                  </Button>
+                ) : undefined
+              }
+            />
           ))}
       </div>
     </div>
