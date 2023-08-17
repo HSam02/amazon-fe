@@ -1,10 +1,11 @@
+import { IUser } from "../utils/types/interfaces";
 import {
   IAuthResponse,
   ILoginRequest,
   IRegisterRequest,
 } from "../utils/Auth/interfaces";
-import { authEndpoints } from "../utils/endpoints";
-import localStorageKeys from "../utils/localStorageKeys";
+import { authEndpoints } from "../utils/types/endpoints";
+import localStorageKeys from "../utils/types/localStorageKeys";
 import appAxios from "./axios.service";
 
 export const register = async (reqData: IRegisterRequest) => {
@@ -35,7 +36,7 @@ export const login = async (reqData: ILoginRequest) => {
 
 export const getUser = async () => {
   try {
-    const { data } = await appAxios.get(authEndpoints.GET_USER);
+    const { data } = await appAxios.get<IUser>(authEndpoints.GET_USER);
     return data;
   } catch (error) {
     throw error;

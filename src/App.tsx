@@ -1,44 +1,19 @@
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import {
-  Outlet,
-  RouterProvider,
-  createBrowserRouter,
-  redirect,
-} from "react-router-dom";
-import { getUser } from "./services/auth.service";
-import store from "./redux/store";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <>home</>,
-    loader: () => {
-      // return redirect('/auth/login')
-      console.log(store.getState().user);
-      return null;
-    },
-  },
-  {
-    path: "/auth",
-    loader: () => {
-      // return redirect('/');
-      return null;
-    },
-    children: [
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
-    ],
-  },
-]);
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { getUser } from "./redux/actionCreators/user.actionCreators";
+import { selectUser } from "./redux/selectors";
+import createRouter from "./routes/routes";
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectUser);
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  const router = useMemo(() => createRouter(user), [user]);
+
   return (
     <div>
       <RouterProvider router={router} />

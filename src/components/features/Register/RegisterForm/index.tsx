@@ -1,4 +1,5 @@
 import { Button, Form, FormInstance, Input, Space } from "antd";
+import { Link } from "react-router-dom";
 import {
   confirmRules,
   emailRulesWithCheck,
@@ -47,7 +48,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         <Button type="primary" htmlType="submit">
           Register
         </Button>
-        <Button>Sign In</Button>
+        <Button>
+          <Link to="/auth/login">Sign In</Link>
+        </Button>
       </Space>
     </Form>
   );

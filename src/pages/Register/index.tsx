@@ -1,9 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Steps, Form, Result, Spin, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { RegisterForm } from "../../components/features/Register/RegisterForm";
 import { EmailVerification } from "../../components/features/Register/EmailVerification";
-import { register } from "../../services/auth.service";
+import { selectUser } from "../../redux/selectors";
+import { registerUser } from "../../redux/actionCreators/user.actionCreators";
 import { getStepsItems } from "../../utils/Auth/steps.items";
 import { ResultStatusType } from "antd/es/result";
 import { IRegisterRequest } from "../../utils/Auth/interfaces";
@@ -12,11 +14,13 @@ import scss from "./Register.module.scss";
 export const Register = () => {
   const [form] = Form.useForm<IRegisterRequest>();
 
+  const dispatch = useDispatch();
+  const { status } = useSelector(selectUser);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [registrationData, setRegistrationData] = useState(
     {} as IRegisterRequest
   );
-  const [status, setStatus] = useState<ResultStatusType | "loading">("success");
 
   const stepsItems = useMemo(() => getStepsItems(status), [status]);
 
@@ -30,19 +34,8 @@ export const Register = () => {
 
   useEffect(() => {
     if (currentStep === 2) {
-      (async () => {
-        try {
-          setStatus("loading");
-          const data = await register(registrationData);
-          setStatus("success");
-          console.log(data);
-        } catch (error) {
-          console.error(error);
-          setStatus("error");
-        }
-      })();
+      dispatch(registerUser(registrationData));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep]);
 
   return (
@@ -61,7 +54,7 @@ export const Register = () => {
           />
         )}
         {currentStep === 2 &&
-          (status === "loading" ? (
+          (status === "pending" ? (
             <Spin
               className={scss.loading}
               indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />}
@@ -69,16 +62,12 @@ export const Register = () => {
           ) : (
             <Result
               status={status as ResultStatusType}
-              title={status}
-              subTitle={`Registration ${
-                status === "error" ? "fail" : status
-              }ed`}
+              title="Error"
+              subTitle="Registration failed"
               extra={
-                status === "error" ? (
-                  <Button type="primary" onClick={() => setCurrentStep(0)}>
-                    Go Back
-                  </Button>
-                ) : undefined
+                <Button type="primary" onClick={() => setCurrentStep(0)}>
+                  Go Back
+                </Button>
               }
             />
           ))}

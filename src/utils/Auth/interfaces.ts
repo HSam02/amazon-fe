@@ -1,3 +1,5 @@
+import { IUser } from "../types/interfaces";
+
 export interface IRegisterForm {
   firstName: string;
   lastName: string;
@@ -25,6 +27,6 @@ export interface ILoginRequest {
 }
 
 export interface IAuthResponse {
-  user: "user";
+  user: IUser;
   token: string;
 }

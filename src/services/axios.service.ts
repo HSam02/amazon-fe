@@ -1,4 +1,4 @@
-import localStorageKeys from "../utils/localStorageKeys";
+import localStorageKeys from "../utils/types/localStorageKeys";
 import axios from "axios";
 
 const appAxios = axios.create({

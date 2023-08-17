@@ -6,11 +6,11 @@ import {
   FrownOutlined,
   SmileOutlined,
 } from "@ant-design/icons";
-import { ResultStatusType } from "antd/es/result";
+import { requestStatus } from "../types/enums";
 
-export const getStepsItems: (
-  status: ResultStatusType | "loading"
-) => StepProps[] = (status) => [
+export const getStepsItems: (status: requestStatus) => StepProps[] = (
+  status
+) => [
   {
     title: "Register Form",
     icon: <UserOutlined />,
@@ -21,13 +21,13 @@ export const getStepsItems: (
   },
   {
     title:
-      status === "loading"
+      status === "pending"
         ? "Pending"
         : status === "error"
         ? "Registration Failed"
         : "Successfuly Registered",
     icon:
-      status === "loading" ? (
+      status === "pending" ? (
         <LoadingOutlined />
       ) : status === "error" ? (
         <FrownOutlined />

@@ -1,26 +1,20 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Input, Space } from "antd";
-import { login } from "../../services/auth.service";
+import { Link } from "react-router-dom";
 import { emailRules, passwordRules } from "../../utils/Auth/form.rules";
 import { ILoginRequest } from "../../utils/Auth/interfaces";
+import { loginUser } from "../../redux/actionCreators/user.actionCreators";
+import { selectUser } from "../../redux/selectors";
 import scss from "./Login.module.scss";
 
 export const Login = () => {
   const [form] = Form.useForm();
-
-  const [isLoading, setIsLoading] = useState(false);
+  
+  const dispatch = useDispatch();
+  const { status } = useSelector(selectUser);
 
   const onSubmit = async (values: ILoginRequest) => {
-    try {
-      setIsLoading(true);
-      const user = await login(values);
-      console.log(user);
-    } catch (error: any) {
-      console.error(error);
-      alert(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(loginUser(values));
   };
 
   return (
@@ -39,10 +33,16 @@ export const Login = () => {
               justifyContent: "center",
             }}
           >
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={status === "pending"}
+            >
               Log In
             </Button>
-            <Button>Sign Up</Button>
+            <Button>
+              <Link to="/auth/register">Sign Up</Link>
+            </Button>
           </Space>
         </Form>
       </div>
