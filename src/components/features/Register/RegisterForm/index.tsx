@@ -1,4 +1,5 @@
-import { Button, Form, FormInstance, Input, Space } from "antd";
+import { useState } from "react";
+import { Button, Form, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import {
   confirmRules,
@@ -7,19 +8,40 @@ import {
   lastNameRules,
   passwordRules,
 } from "../../../../utils/Auth/form.rules";
-import { IRegisterForm } from "../../../../utils/Auth/interfaces";
+import {
+  IRegisterForm,
+  IRegisterRequest,
+} from "../../../../utils/Auth/interfaces";
+import { verify } from "../../../../services/auth.service";
 
 type RegisterFormProps = {
-  form: FormInstance<IRegisterForm>;
-  onSubmit: (values: IRegisterForm) => void;
+  initialValues?: IRegisterForm;
+  onSubmit: (values: IRegisterRequest) => void;
 };
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
-  form,
+  initialValues,
   onSubmit,
 }) => {
+  const [form] = Form.useForm<IRegisterRequest>();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onFinish = async (values: IRegisterForm) => {
+    try {
+      setIsLoading(true);
+      const token = await verify(values.email);
+      onSubmit({ ...values, verification: { token, code: "" } });
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Form form={form} onFinish={onSubmit}>
+    <Form form={form} onFinish={onFinish} initialValues={initialValues}>
       <Form.Item name="firstName" rules={firstNameRules}>
         <Input placeholder="First Name" />
       </Form.Item>
@@ -45,7 +67,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           justifyContent: "center",
         }}
       >
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Register
         </Button>
         <Button>

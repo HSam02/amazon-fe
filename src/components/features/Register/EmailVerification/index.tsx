@@ -2,31 +2,29 @@ import { useState } from "react";
 import { Button, Form, Statistic, Input, Space } from "antd";
 import { IVerificationForm } from "../../../../utils/Auth/interfaces";
 import { verify } from "../../../../services/auth.service";
-import {
-  codeRules,
-  emailRules,
-  emailRulesWithCheck,
-} from "../../../../utils/Auth/form.rules";
+import { codeRules } from "../../../../utils/Auth/form.rules";
 
 type EmailVerificationProps = {
   email: string;
+  defaultToken: string;
   onSubmit: (values: any) => void;
+  handleGoBack: () => void;
 };
 
 export const EmailVerification: React.FC<EmailVerificationProps> = ({
   email,
+  defaultToken,
   onSubmit,
+  handleGoBack,
 }) => {
-  const [form] = Form.useForm<IVerificationForm>();
-
   const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [token, setToken] = useState<string>("");
+  const [isDisable, setIsDisable] = useState(true);
+  const [token, setToken] = useState<string>(defaultToken);
 
   const handleSendCode = async () => {
     try {
       setIsLoading(true);
-      const token = await verify(form.getFieldValue("email"));
+      const token = await verify(email);
       setToken(token);
     } catch (error: any) {
       console.error(error);
@@ -38,59 +36,35 @@ export const EmailVerification: React.FC<EmailVerificationProps> = ({
 
   const onFinish = (values: IVerificationForm) => {
     onSubmit({
-      email: values.email,
       verification: { token, code: values.code },
     });
   };
 
   return (
-    <Form form={form} onFinish={onFinish} initialValues={{ email }}>
-      <Form.Item
-        name="email"
-        rules={isEditing ? emailRulesWithCheck : emailRules}
-      >
-        <Space.Compact style={{ width: "100%" }}>
-          <Input
-            defaultValue={email}
-            disabled={!isEditing}
-            placeholder="Email"
-          />
-          <Button
-            onClick={() => setIsEditing((prev) => !prev)}
-            disabled={isLoading || Boolean(token)}
-          >
-            {isEditing ? "Confirm" : "Change Email"}
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleSendCode}
-            loading={isLoading}
-            disabled={isEditing || Boolean(token)}
-          >
-            Get Code
-          </Button>
-        </Space.Compact>
+    <Form onFinish={onFinish}>
+      <Form.Item rules={codeRules}>
+        <Input placeholder="Verification Code" />
       </Form.Item>
-      {token && (
-        <Form.Item name="code" rules={codeRules}>
-          <Space style={{ width: "100%" }}>
-            <Input placeholder="Verification Code" />
-            <Statistic.Countdown
-              value={Date.now() + 2 * 60 * 1000}
-              format="m:ss"
-              onFinish={() => setToken("")}
-            />
-          </Space>
-        </Form.Item>
-      )}
       <Space>
-        <Button
-          type="primary"
-          htmlType="submit"
-          disabled={isEditing || isLoading || !token}
-        >
-          Verify
+        <Button type="primary" htmlType="submit" disabled={isLoading}>
+          Apply
         </Button>
+        <Button onClick={handleGoBack}>Go Back</Button>
+        <Button
+          onClick={handleSendCode}
+          type="text"
+          disabled={isDisable}
+          loading={isLoading}
+        >
+          Resend Code
+        </Button>
+        {isDisable && (
+          <Statistic.Countdown
+            value={Date.now() + 3 * 1000}
+            format="m:ss"
+            onFinish={() => setIsDisable(false)}
+          />
+        )}
       </Space>
     </Form>
   );
