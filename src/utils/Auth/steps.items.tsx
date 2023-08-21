@@ -1,16 +1,7 @@
 import { StepProps } from "antd";
-import {
-  LoadingOutlined,
-  SolutionOutlined,
-  UserOutlined,
-  FrownOutlined,
-  SmileOutlined,
-} from "@ant-design/icons";
-import { requestStatus } from "../types/enums";
+import { SolutionOutlined, UserOutlined } from "@ant-design/icons";
 
-export const getStepsItems: (status: requestStatus) => StepProps[] = (
-  status
-) => [
+export const stepsItems: StepProps[] = [
   {
     title: "Register Form",
     icon: <UserOutlined />,
@@ -18,21 +9,5 @@ export const getStepsItems: (status: requestStatus) => StepProps[] = (
   {
     title: "Email Verification",
     icon: <SolutionOutlined />,
-  },
-  {
-    title:
-      status === "pending"
-        ? "Pending"
-        : status === "error"
-        ? "Registration Failed"
-        : "Successfuly Registered",
-    icon:
-      status === "pending" ? (
-        <LoadingOutlined />
-      ) : status === "error" ? (
-        <FrownOutlined />
-      ) : (
-        <SmileOutlined />
-      ),
   },
 ];

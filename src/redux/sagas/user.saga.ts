@@ -11,7 +11,7 @@ function* getUserAsync() {
     yield put(actionCreators.setUserData(user));
   } catch (error) {
     console.error(error);
-    yield put(actionCreators.setUserError());
+    yield put(actionCreators.setUserData(null));
   }
 }
 
@@ -31,8 +31,9 @@ function* registerUserAsync({ payload }: actionTypes.IRegisterUserAction) {
     yield put(actionCreators.setUserPending());
     const user: IUser = yield call(register, payload);
     yield put(actionCreators.setUserData(user));
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    alert(error.message);
     yield put(actionCreators.setUserError());
   }
 }

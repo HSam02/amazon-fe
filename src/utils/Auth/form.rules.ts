@@ -45,7 +45,9 @@ export const emailRules: Rule[] = [
   },
 ];
 
-export const emailRulesWithCheck: Rule[] = [
+export const getEmailRulesWithCheck = (
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+): Rule[] => [
   ...emailRules,
   () => ({
     async validator(_, value: string) {
@@ -53,6 +55,7 @@ export const emailRulesWithCheck: Rule[] = [
         return;
       }
       try {
+        setIsLoading(true);
         const isEmailFree = await checkEmail(value);
         if (isEmailFree) {
           return Promise.resolve();
@@ -63,8 +66,11 @@ export const emailRulesWithCheck: Rule[] = [
         }
       } catch (error) {
         return Promise.reject(new Error("Error while checking Email"));
+      } finally {
+        setIsLoading(false);
       }
     },
+    validateTrigger: "onSubmit",
   }),
 ];
 

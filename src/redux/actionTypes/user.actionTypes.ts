@@ -21,7 +21,7 @@ export interface IGetUserAction {
 export const SET_USER_DATA = "userActionType/SET_USER_DATA";
 export interface ISetUserDataAction {
   type: typeof SET_USER_DATA;
-  payload: IUser;
+  payload: IUser | null;
 }
 
 export const SET_USER_ERROR = "userActionType/SET_USER_ERROR";

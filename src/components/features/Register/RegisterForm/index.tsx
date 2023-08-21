@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button, Form, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import {
   confirmRules,
-  emailRulesWithCheck,
+  getEmailRulesWithCheck,
   firstNameRules,
   lastNameRules,
   passwordRules,
@@ -27,8 +27,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const onFinish = async (values: IRegisterForm) => {
+  const onFinish = async (values: IRegisterForm & { confirm?: string }) => {
     try {
+      delete values["confirm"];
       setIsLoading(true);
       const token = await verify(values.email);
       onSubmit({ ...values, verification: { token, code: "" } });
@@ -40,15 +41,21 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     }
   };
 
+  const emailRules = useMemo(() => getEmailRulesWithCheck(setIsLoading), []);
+
   return (
-    <Form form={form} onFinish={onFinish} initialValues={initialValues}>
+    <Form
+      form={form}
+      onFinish={onFinish}
+      initialValues={{ ...initialValues, confirm: initialValues?.password }}
+    >
       <Form.Item name="firstName" rules={firstNameRules}>
         <Input placeholder="First Name" />
       </Form.Item>
       <Form.Item name="lastName" rules={lastNameRules}>
         <Input placeholder="lastName" />
       </Form.Item>
-      <Form.Item name="email" rules={emailRulesWithCheck}>
+      <Form.Item name="email" rules={emailRules}>
         <Input placeholder="Email" />
       </Form.Item>
       <Form.Item name="password" rules={passwordRules}>

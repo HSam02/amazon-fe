@@ -20,7 +20,7 @@ export const registerUser = (
   payload: registerData,
 });
 
-export const setUserData = (user: IUser): actions.ISetUserDataAction => ({
+export const setUserData = (user: IUser | null): actions.ISetUserDataAction => ({
   type: actions.SET_USER_DATA,
   payload: user,
 });

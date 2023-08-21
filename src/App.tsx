@@ -10,6 +10,7 @@ export const App = () => {
   const { user } = useSelector(selectUser);
   useEffect(() => {
     dispatch(getUser());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const router = useMemo(() => createRouter(user), [user]);
