@@ -31,6 +31,18 @@ export const addCategoryRecursively = (
   categories: ICategory[],
   newCategory: IActionCategory
 ): ICategory[] => {
+  if (newCategory.parentId === undefined) {
+    return [
+      ...categories,
+      {
+        id: newCategory.id,
+        title: newCategory.title,
+        status: newCategory.status,
+        subCategories: [] as ICategory[],
+      },
+    ];
+  }
+
   return categories.map((category) => {
     if (category.id === newCategory.parentId) {
       return {
@@ -42,7 +54,7 @@ export const addCategoryRecursively = (
             title: newCategory.title,
             status: newCategory.status,
             subCategories: [] as ICategory[],
-          } as ICategory,
+          },
         ],
       };
     } else if (category.subCategories.length > 0) {
