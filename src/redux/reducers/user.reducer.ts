@@ -2,35 +2,35 @@ import { requestStatus } from "../../utils/types/enums";
 import { IUser } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/user.actionTypes";
 
-interface IUserState {
+export interface IUserState {
   user: IUser | null;
-  status: requestStatus;
+  status: requestStatus | null;
 }
 
 const initialState: IUserState = {
   user: null,
-  status: requestStatus.IDLE,
+  status: null,
 };
 
-const userReducer = (state = initialState, action: actions.userAction) => {
+const userReducer = (
+  state = initialState,
+  action: actions.userAction
+): IUserState => {
   switch (action.type) {
     case actions.SET_USER_DATA: {
       return {
-        ...state,
         user: action.payload,
-        status: requestStatus.IDLE,
+        status: requestStatus.SUCCESS,
       };
     }
     case actions.SET_USER_ERROR: {
       return {
-        ...state,
         user: null,
         status: requestStatus.ERROR,
       };
     }
     case actions.SET_USER_PENDING: {
       return {
-        ...state,
         user: null,
         status: requestStatus.PENDING,
       };

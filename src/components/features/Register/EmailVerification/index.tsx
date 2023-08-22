@@ -85,7 +85,7 @@ export const EmailVerification: React.FC<EmailVerificationProps> = ({
         </Button>
         {isDisable && (
           <Statistic.Countdown
-            value={Date.now() + 3 * 1000}
+            value={Date.now() + 60 * 1000}
             format="m:ss"
             onFinish={() => setIsDisable(false)}
           />

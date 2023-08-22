@@ -1,4 +1,4 @@
-import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { call, fork, put, takeEvery } from "redux-saga/effects";
 import { getUser, login, register } from "../../services/auth.service";
 import { IUser } from "../../utils/types/interfaces";
 import * as actionCreators from "../actionCreators/user.actionCreators";
@@ -33,27 +33,16 @@ function* registerUserAsync({ payload }: actionTypes.IRegisterUserAction) {
     yield put(actionCreators.setUserData(user));
   } catch (error: any) {
     console.error(error);
-    alert(error.message);
     yield put(actionCreators.setUserError());
   }
 }
 
-function* watchGetUserAsync() {
+function* watchUser() {
   yield takeEvery(actionTypes.GET_USER, getUserAsync);
-}
-
-function* watchLoginUserAsync() {
   yield takeEvery(actionTypes.LOGIN_USER, loginUserAsync);
-}
-
-function* watchRegisterUserAsync() {
   yield takeEvery(actionTypes.REGISTER_USER, registerUserAsync);
 }
 
 export default function* userSaga() {
-  yield all([
-    fork(watchGetUserAsync),
-    fork(watchLoginUserAsync),
-    fork(watchRegisterUserAsync),
-  ]);
+  yield fork(watchUser);
 }

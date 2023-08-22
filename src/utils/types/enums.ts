@@ -1,5 +1,10 @@
 export enum requestStatus {
-  IDLE = "idle",
+  SUCCESS = "success",
   PENDING = "pending",
   ERROR = "error",
+}
+
+export enum roles {
+  USER = "user",
+  ADMIN = "admin",
 }

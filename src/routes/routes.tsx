@@ -1,18 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
-import { IUser } from "../utils/types/interfaces";
+import { Login, Register, Admin } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Login } from "../pages/Login";
-import { Register } from "../pages/Register";
+import { IUserState } from "../redux/reducers/user.reducer";
+import { requestStatus, roles } from "../utils/types/enums";
 
-const createRouter = (user: IUser | null) =>
-  createBrowserRouter([
+const createRouter = ({ user, status }: IUserState) => {
+  const isUserLoading = !status || status === requestStatus.PENDING;
+  return createBrowserRouter([
     {
       path: "/",
       element: <>home</>,
     },
     {
       path: "/auth",
-      element: <ProtectedRoute isAllowed={user === null} redirectPath="/" />,
+      element: (
+        <ProtectedRoute
+          isAllowed={user === null}
+          isLoading={isUserLoading}
+          redirectPath="/"
+        />
+      ),
       children: [
         {
           path: "login",
@@ -24,6 +31,19 @@ const createRouter = (user: IUser | null) =>
         },
       ],
     },
+    {
+      path: "/admin",
+      element: (
+        <ProtectedRoute
+          isAllowed={user?.role === roles.ADMIN}
+          isLoading={isUserLoading}
+          redirectPath="/"
+        >
+          <Admin />
+        </ProtectedRoute>
+      ),
+    },
   ]);
+};
 
 export default createRouter;
