@@ -2,7 +2,7 @@ import {
   IActionCategory,
   ICreateCategoryRequest,
   IUpdateCategoryRequest,
-} from "../../utils/Categories/interfaces";
+} from "../../utils/Admin/interfaces";
 import { ICategory } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/categories.actionTypes";
 

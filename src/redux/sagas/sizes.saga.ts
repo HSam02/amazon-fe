@@ -33,7 +33,11 @@ function* createSizeAsync({ payload }: actionTypes.ICreateSizeAction) {
     );
     const size: ISize = yield call(createSize, payload);
     yield put(
-      actionCreators.editSize({ ...size, status: requestStatus.SUCCESS })
+      actionCreators.editSize({
+        ...size,
+        editingId: tempId,
+        status: requestStatus.SUCCESS,
+      })
     );
   } catch (error) {
     console.error(error);

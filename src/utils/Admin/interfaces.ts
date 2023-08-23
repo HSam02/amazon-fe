@@ -1,4 +1,5 @@
 import { requestStatus } from "../types/enums";
+import { ISize } from "../types/interfaces";
 
 export interface ICreateCategoryRequest {
   title: string;
@@ -17,4 +18,8 @@ export interface IUpdateCategoryRequest {
 export interface IActionCategory extends ICategoryResponse {
   editingId: number;
   status: requestStatus;
+}
+
+export interface IActionSize extends ISize {
+  editingId?: number;
 }

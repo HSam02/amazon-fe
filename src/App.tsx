@@ -5,6 +5,7 @@ import { getUser } from "./redux/actionCreators/user.actionCreators";
 import { selectUser } from "./redux/selectors";
 import createRouter from "./routes/routes";
 import { getCategories } from "./redux/actionCreators/categories.actionCreators";
+import { getSizes } from "./redux/actionCreators/sizes.actionCreators";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export const App = () => {
   useLayoutEffect(() => {
     dispatch(getUser());
     dispatch(getCategories());
+    dispatch(getSizes());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

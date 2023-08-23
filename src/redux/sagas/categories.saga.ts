@@ -10,7 +10,7 @@ import { requestStatus } from "../../utils/types/enums";
 import {
   IActionCategory,
   ICategoryResponse,
-} from "../../utils/Categories/interfaces";
+} from "../../utils/Admin/interfaces";
 import * as actionCreators from "../actionCreators/categories.actionCreators";
 import * as actionTypes from "../actionTypes/categories.actionTypes";
 

@@ -42,14 +42,15 @@ const sizesReducer = (
       };
     }
     case actions.EDIT_SIZE: {
+      const { editingId, ...newData } = action.payload;
       return {
         ...state,
         sizes:
           state.sizes?.map((size) =>
-            size.id === action.payload.id
+            (editingId ? size.id === editingId : size.id === action.payload.id)
               ? {
                   ...size,
-                  ...action.payload,
+                  ...newData,
                 }
               : size
           ) || state.sizes,

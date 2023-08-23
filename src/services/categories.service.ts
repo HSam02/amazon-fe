@@ -2,7 +2,7 @@ import {
   ICategoryResponse,
   ICreateCategoryRequest,
   IUpdateCategoryRequest,
-} from "../utils/Categories/interfaces";
+} from "../utils/Admin/interfaces";
 import { categoryEndpoints } from "../utils/types/endpoints";
 import { ICategory, ISuccessResponse } from "../utils/types/interfaces";
 import appAxios from "./axios.service";

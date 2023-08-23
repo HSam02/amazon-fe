@@ -2,7 +2,7 @@ import {
   addCategoryRecursively,
   deleteCategoryRecursively,
   editCategoryRecursively,
-} from "../../utils/Categories/helperFunctions";
+} from "../../utils/Admin/helperFunctions";
 import { requestStatus } from "../../utils/types/enums";
 import { ICategory } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/categories.actionTypes";

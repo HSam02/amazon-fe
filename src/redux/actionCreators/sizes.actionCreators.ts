@@ -1,3 +1,4 @@
+import { IActionSize } from "../../utils/Admin/interfaces";
 import { ISize } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/sizes.actionTypes";
 
@@ -38,7 +39,7 @@ export const addSize = (size: ISize): actions.IAddSizeAction => ({
   payload: size,
 });
 
-export const editSize = (size: ISize): actions.IEditSizeAction => ({
+export const editSize = (size: IActionSize): actions.IEditSizeAction => ({
   type: actions.EDIT_SIZE,
   payload: size,
 });

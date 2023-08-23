@@ -1,3 +1,4 @@
+import { IActionSize } from "../../utils/Admin/interfaces";
 import { ISize } from "../../utils/types/interfaces";
 
 export const GET_SIZES = "sizesActionType/GET_SIZES";
@@ -48,7 +49,7 @@ export interface IAddSizeAction {
 export const EDIT_SIZE = "sizesActionType/EDIT_SIZE";
 export interface IEditSizeAction {
   type: typeof EDIT_SIZE;
-  payload: ISize;
+  payload: IActionSize;
 }
 
 export const REMOVE_SIZE = "sizesActionType/REMOVE_SIZE";
