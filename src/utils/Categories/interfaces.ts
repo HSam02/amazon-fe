@@ -15,5 +15,6 @@ export interface IUpdateCategoryRequest {
 }
 
 export interface IActionCategory extends ICategoryResponse {
+  editingId: number;
   status: requestStatus;
 }

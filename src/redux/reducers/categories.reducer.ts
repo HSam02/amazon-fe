@@ -40,9 +40,9 @@ const categoriesReducer = (
         : state;
     }
     case actions.EDIT_CATEGORIES: {
-      const { parentId, ...newCategory } = action.payload;
+      const { parentId, editingId, ...newCategory } = action.payload;
       const newCategories = state.categories
-        ? editCategoryRecursively(state.categories, newCategory)
+        ? editCategoryRecursively(state.categories, newCategory, editingId)
         : state.categories;
       return { ...state, categories: newCategories };
     }

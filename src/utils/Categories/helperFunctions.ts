@@ -1,32 +1,6 @@
 import { ICategory } from "../types/interfaces";
 import { IActionCategory } from "./interfaces";
 
-export const editCategoryRecursively = (
-  categories: ICategory[],
-  newData: Partial<IActionCategory>
-): ICategory[] => {
-  return categories.map((category) => {
-    if (
-      category.title
-        ? category.title === newData.title
-        : category.id === newData.id
-    ) {
-      return {
-        ...category,
-        id: newData.id || category.id,
-        title: newData.title || category.title,
-        status: newData.status || category.status,
-      };
-    } else if (category.subCategories.length > 0) {
-      return {
-        ...category,
-        subCategories: editCategoryRecursively(category.subCategories, newData),
-      };
-    }
-    return category;
-  });
-};
-
 export const addCategoryRecursively = (
   categories: ICategory[],
   newCategory: IActionCategory
@@ -70,6 +44,33 @@ export const addCategoryRecursively = (
   });
 };
 
+export const editCategoryRecursively = (
+  categories: ICategory[],
+  newData: Partial<IActionCategory>,
+  id?: number
+): ICategory[] => {
+  return categories.map((category) => {
+    if (id ? category.id === id : category.id === newData.id) {
+      return {
+        ...category,
+        id: newData.id || category.id,
+        title: newData.title || category.title,
+        status: newData.status || category.status,
+      };
+    } else if (category.subCategories.length > 0) {
+      return {
+        ...category,
+        subCategories: editCategoryRecursively(
+          category.subCategories,
+          newData,
+          id
+        ),
+      };
+    }
+    return category;
+  });
+};
+
 export const deleteCategoryRecursively = (
   categories: ICategory[],
   id: number
@@ -86,3 +87,16 @@ export const deleteCategoryRecursively = (
     return true;
   });
 };
+
+export const isCategoryExists = (
+  categories: ICategory[],
+  title: string
+): boolean =>
+  categories.some((category) => {
+    if (category.title.toLowerCase() === title.toLowerCase()) {
+      return true;
+    } else if (category.subCategories.length > 0) {
+      return isCategoryExists(category.subCategories, title);
+    }
+    return false;
+  });

@@ -18,7 +18,14 @@ function* getCategoriesAsync() {
   try {
     yield put(actionCreators.setCategoriesPending());
     const categories: ICategory[] = yield getCategories();
-    yield put(actionCreators.setCategories(categories));
+    yield put(
+      actionCreators.setCategories(
+        categories.map((category) => ({
+          ...category,
+          status: requestStatus.SUCCESS,
+        }))
+      )
+    );
   } catch (error) {
     console.error(error);
     yield put(actionCreators.setCategoriesError());
@@ -26,14 +33,20 @@ function* getCategoriesAsync() {
 }
 
 function* createCategoryAsync({ payload }: actionTypes.ICreateCategoryAction) {
+  const tempId = Math.random();
   try {
     yield put(
-      actionCreators.addCategory({ ...payload, id: NaN } as IActionCategory)
+      actionCreators.addCategory({
+        ...payload,
+        id: tempId,
+        status: requestStatus.PENDING,
+      } as IActionCategory)
     );
     const category: ICategoryResponse = yield call(createCategory, payload);
     yield put(
       actionCreators.editCategory({
         ...category,
+        editingId: tempId,
         status: requestStatus.SUCCESS,
       })
     );
@@ -42,6 +55,7 @@ function* createCategoryAsync({ payload }: actionTypes.ICreateCategoryAction) {
     yield put(
       actionCreators.editCategory({
         ...payload,
+        editingId: tempId,
         status: requestStatus.ERROR,
       } as IActionCategory)
     );
