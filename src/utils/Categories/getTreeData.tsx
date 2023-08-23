@@ -15,12 +15,12 @@ const getTreeNestedData = (categories: ICategory[]): DataNode[] =>
 
 const getTreeData = (
   categories: ICategory[],
-  status: requestStatus | null
+  status: requestStatus
 ): DataNode[] => [
   {
     title: (
       <TreeItem
-        category={{ id: 0, title: "Categories", status: status } as ICategory}
+        category={{ id: 0, title: "Categories", status } as ICategory}
       />
     ),
     key: "parent/0",

@@ -4,12 +4,12 @@ import * as actions from "../actionTypes/user.actionTypes";
 
 export interface IUserState {
   user: IUser | null;
-  status: requestStatus | null;
+  status: requestStatus;
 }
 
 const initialState: IUserState = {
   user: null,
-  status: null,
+  status: requestStatus.IDLE,
 };
 
 const userReducer = (

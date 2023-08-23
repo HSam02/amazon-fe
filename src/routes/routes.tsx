@@ -5,7 +5,8 @@ import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
 
 const createRouter = ({ user, status }: IUserState) => {
-  const isUserLoading = !status || status === requestStatus.PENDING;
+  const isUserLoading =
+    status === requestStatus.IDLE || status === requestStatus.PENDING;
   return createBrowserRouter([
     {
       path: "/",

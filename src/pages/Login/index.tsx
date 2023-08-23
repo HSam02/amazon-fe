@@ -54,7 +54,7 @@ export const Login = () => {
             <Button
               type="primary"
               htmlType="submit"
-              loading={status === "pending"}
+              loading={status === requestStatus.PENDING}
             >
               Log In
             </Button>

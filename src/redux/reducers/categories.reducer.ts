@@ -9,12 +9,12 @@ import * as actions from "../actionTypes/categories.actionTypes";
 
 interface ICategoryState {
   categories: ICategory[] | null;
-  status: requestStatus | null;
+  status: requestStatus;
 }
 
 const initialState: ICategoryState = {
   categories: null,
-  status: null,
+  status: requestStatus.IDLE,
 };
 
 const categoriesReducer = (

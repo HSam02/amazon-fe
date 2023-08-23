@@ -18,6 +18,7 @@ export interface ICategory {
 export interface ISize {
   id: number;
   value: string;
+  status: requestStatus;
 }
 
 export interface IColor {
