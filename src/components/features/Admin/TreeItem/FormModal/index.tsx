@@ -1,17 +1,25 @@
 import { Form, Input, Modal } from "antd";
-import { ISize } from "../../../../../utils/types/interfaces";
+import { IColor, ISize } from "../../../../../utils/types/interfaces";
 import { useDispatch } from "react-redux";
 import {
   createCategory,
   updateCategory,
 } from "../../../../../redux/actionCreators/categories.actionCreators";
-import { CategoryRules } from "../../../../../utils/Admin/form.rules";
+import {
+  CategoryRules,
+  ColorRules,
+  SizeRules,
+} from "../../../../../utils/Admin/form.rules";
 import { adminTools } from "../../../../../utils/types/enums";
 import {
   createSize,
   updateSize,
 } from "../../../../../redux/actionCreators/sizes.actionCreators";
 import { IItem } from "..";
+import {
+  createColor,
+  updateColor,
+} from "../../../../../redux/actionCreators/colors.actionCreators";
 
 type FormModalProps = {
   onClose: () => void;
@@ -46,13 +54,19 @@ export const FormModal: React.FC<FormModalProps> = ({
           : dispatch(createSize(title));
         break;
       }
+      case adminTools.COLOR: {
+        edit
+          ? dispatch(updateColor({ id: item.id, value: title } as IColor))
+          : dispatch(createColor(title));
+        break;
+      }
     }
 
     onClose();
   };
 
   const onOk = () => {
-    if (item.title === form.getFieldValue("title")) {
+    if (item.title === form.getFieldValue("title") && edit) {
       return onClose();
     }
     form.submit();
@@ -73,7 +87,16 @@ export const FormModal: React.FC<FormModalProps> = ({
         onFinish={onSubmit}
         onKeyDown={handlePressEnter}
       >
-        <Form.Item name="title" rules={CategoryRules}>
+        <Form.Item
+          name="title"
+          rules={
+            item.type === adminTools.CATEGORY
+              ? CategoryRules
+              : item.type === adminTools.COLOR
+              ? ColorRules
+              : SizeRules
+          }
+        >
           <Input placeholder="Title" />
         </Form.Item>
       </Form>

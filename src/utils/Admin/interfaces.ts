@@ -23,3 +23,5 @@ export interface IActionCategory extends ICategoryResponse {
 export interface IActionSize extends ISize {
   editingId?: number;
 }
+
+export interface IActionColor extends IActionSize {}

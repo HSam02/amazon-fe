@@ -6,6 +6,7 @@ import { selectUser } from "./redux/selectors";
 import createRouter from "./routes/routes";
 import { getCategories } from "./redux/actionCreators/categories.actionCreators";
 import { getSizes } from "./redux/actionCreators/sizes.actionCreators";
+import { getColors } from "./redux/actionCreators/colors.actionCreators";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export const App = () => {
     dispatch(getUser());
     dispatch(getCategories());
     dispatch(getSizes());
+    dispatch(getColors());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

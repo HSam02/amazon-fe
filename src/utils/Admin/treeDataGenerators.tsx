@@ -1,5 +1,5 @@
 import { DataNode } from "antd/es/tree";
-import { ICategory, ISize } from "../types/interfaces";
+import { ICategory, IColor, ISize } from "../types/interfaces";
 import { TreeItem } from "../../components/features/Admin/TreeItem";
 import { adminTools, requestStatus } from "../types/enums";
 
@@ -72,6 +72,38 @@ export const getSizesTreeData = (
         />
       ),
       key: `size/${size.value}/${size.id}`,
+    })),
+  },
+];
+
+export const getColorTreeData = (
+  colors: IColor[],
+  status: requestStatus
+): DataNode[] => [
+  {
+    title: (
+      <TreeItem
+        item={{
+          id: 0,
+          title: "Colors",
+          status,
+          type: adminTools.COLOR,
+        }}
+      />
+    ),
+    key: "color/0",
+    children: colors.map((color) => ({
+      title: (
+        <TreeItem
+          item={{
+            id: color.id,
+            status: color.status,
+            title: color.value,
+            type: adminTools.COLOR,
+          }}
+        />
+      ),
+      key: `color/${color.value}/${color.id}`,
     })),
   },
 ];

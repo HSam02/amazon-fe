@@ -7,6 +7,7 @@ import { FormModal } from "./FormModal";
 import { deleteCategory } from "../../../../redux/actionCreators/categories.actionCreators";
 import { adminTools, requestStatus } from "../../../../utils/types/enums";
 import { deleteSize } from "../../../../redux/actionCreators/sizes.actionCreators";
+import { deleteColor } from "../../../../redux/actionCreators/colors.actionCreators";
 
 type TreeItemProps = {
   item: IItem;
@@ -33,12 +34,18 @@ export const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
 
   const handleDelete = () => {
     switch (item.type) {
-      case adminTools.CATEGORY:
+      case adminTools.CATEGORY: {
         dispatch(deleteCategory(item.id));
         break;
-      case adminTools.SIZE:
+      }
+      case adminTools.SIZE: {
         dispatch(deleteSize(item.id));
         break;
+      }
+      case adminTools.COLOR: {
+        dispatch(deleteColor(item.id));
+        break;
+      }
     }
   };
 

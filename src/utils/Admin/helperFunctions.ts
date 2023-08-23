@@ -1,4 +1,4 @@
-import { ICategory } from "../types/interfaces";
+import { ICategory, IColor, ISize } from "../types/interfaces";
 import { IActionCategory } from "./interfaces";
 
 export const addCategoryRecursively = (
@@ -100,3 +100,9 @@ export const isCategoryExists = (
     }
     return false;
   });
+
+export const isSizeExists = (sizes: ISize[], value: string): boolean =>
+  sizes.some((size) => size.value === value);
+
+export const isColorExists = (colors: IColor[], value: string): boolean =>
+  colors.some((color) => color.value === value);

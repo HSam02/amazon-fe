@@ -21,10 +21,7 @@ export interface ISize {
   status: requestStatus;
 }
 
-export interface IColor {
-  id: number;
-  value: string;
-}
+export interface IColor extends ISize {}
 
 export interface ISuccessResponse {
   success: boolean;
