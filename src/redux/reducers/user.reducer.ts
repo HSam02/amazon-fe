@@ -1,5 +1,6 @@
 import { requestStatus } from "../../utils/types/enums";
 import { IUser } from "../../utils/types/interfaces";
+import localStorageKeys from "../../utils/types/localStorageKeys";
 import * as actions from "../actionTypes/user.actionTypes";
 
 export interface IUserState {
@@ -33,6 +34,13 @@ const userReducer = (
       return {
         user: null,
         status: requestStatus.PENDING,
+      };
+    }
+    case actions.LOGOUT: {
+      localStorage.removeItem(localStorageKeys.TOKEN_KEY);
+      return {
+        user: null,
+        status: requestStatus.SUCCESS,
       };
     }
     default: {

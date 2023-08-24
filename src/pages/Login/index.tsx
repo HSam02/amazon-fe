@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import { emailRules, passwordRules } from "../../utils/Auth/form.rules";
 import { requestStatus } from "../../utils/types/enums";
 import { ILoginRequest } from "../../utils/Auth/interfaces";
-import { loginUser } from "../../redux/actionCreators/user.actionCreators";
+import {
+  loginUser,
+  setUserData,
+} from "../../redux/actionCreators/user.actionCreators";
 import { selectUser } from "../../redux/selectors";
 import scss from "./Login.module.scss";
 
@@ -32,6 +35,12 @@ export const Login = () => {
         },
       ]);
     }
+
+    return () => {
+      if (status === requestStatus.ERROR) {
+        dispatch(setUserData(null));
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 

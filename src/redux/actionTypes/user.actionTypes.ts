@@ -34,7 +34,13 @@ export interface ISetUserPendingAction {
   type: typeof SET_USER_PENDING;
 }
 
+export const LOGOUT = "userActionType/LOGOUT";
+export interface ILogoutAction {
+  type: typeof LOGOUT;
+}
+
 export type userAction =
   | ISetUserDataAction
   | ISetUserErrorAction
-  | ISetUserPendingAction;
+  | ISetUserPendingAction
+  | ILogoutAction;

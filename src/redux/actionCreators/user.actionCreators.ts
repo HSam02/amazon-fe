@@ -20,7 +20,9 @@ export const registerUser = (
   payload: registerData,
 });
 
-export const setUserData = (user: IUser | null): actions.ISetUserDataAction => ({
+export const setUserData = (
+  user: IUser | null
+): actions.ISetUserDataAction => ({
   type: actions.SET_USER_DATA,
   payload: user,
 });
@@ -31,4 +33,8 @@ export const setUserError = (): actions.ISetUserErrorAction => ({
 
 export const setUserPending = (): actions.ISetUserPendingAction => ({
   type: actions.SET_USER_PENDING,
+});
+
+export const logout = (): actions.ILogoutAction => ({
+  type: actions.LOGOUT,
 });

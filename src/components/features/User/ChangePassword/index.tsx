@@ -39,7 +39,7 @@ export const ChangePassword = () => {
   };
 
   return (
-    <Form form={form} onFinish={onSubmit}>
+    <Form form={form} onFinish={onSubmit} style={{ padding: "20px 50px 0 0" }}>
       <Form.Item name="oldPassword" rules={passwordRules}>
         <Input.Password placeholder="Old Password" />
       </Form.Item>
