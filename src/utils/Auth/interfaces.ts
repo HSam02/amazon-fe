@@ -30,3 +30,8 @@ export interface IAuthResponse {
   user: IUser;
   token: string;
 }
+
+export interface IChangePasswordRequest {
+  oldPassword: string;
+  password: string;
+}

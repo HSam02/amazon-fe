@@ -1,6 +1,7 @@
-import { IUser } from "../utils/types/interfaces";
+import { ISuccessResponse, IUser } from "../utils/types/interfaces";
 import {
   IAuthResponse,
+  IChangePasswordRequest,
   ILoginRequest,
   IRegisterRequest,
 } from "../utils/Auth/interfaces";
@@ -59,6 +60,19 @@ export const checkEmail = async (email: string) => {
     );
 
     return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changePassword = async (reqData: IChangePasswordRequest) => {
+  try {
+    const { data } = await appAxios.post<ISuccessResponse>(
+      authEndpoints.CHANGE_PASSWORD,
+      reqData
+    );
+
+    return data.success;
   } catch (error) {
     throw error;
   }

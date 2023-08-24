@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "../components/features/AppLayout";
-import { Login, Register, Admin } from "../pages/";
+import { Login, Register, Admin, Settings } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
@@ -48,6 +48,22 @@ const createRouter = ({ user, status }: IUserState) => {
               <Admin />
             </ProtectedRoute>
           ),
+        },
+        {
+          path: "/user",
+          element: (
+            <ProtectedRoute
+              isAllowed={user !== null}
+              isLoading={isUserLoading}
+              redirectPath="/"
+            />
+          ),
+          children: [
+            {
+              path: "settings",
+              element: <Settings />,
+            },
+          ],
         },
       ],
     },

@@ -4,6 +4,7 @@ export const enum authEndpoints {
   GET_USER = "/auth/me",
   VERIFY = "/auth/verify/",
   CHECK_EMAIL = "/auth/check/",
+  CHANGE_PASSWORD = "/auth/change",
 }
 
 export enum sizeEndpoints {
