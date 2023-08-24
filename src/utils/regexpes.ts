@@ -1,4 +1,4 @@
-export class Regexes {
+export class Regexpes {
   public static readonly EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   public static readonly ONLY_LETTERS = /^[A-Za-z]+$/;
   public static readonly ONLY_DIGITS = /^[0-9]*$/;

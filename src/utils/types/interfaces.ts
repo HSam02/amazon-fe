@@ -6,6 +6,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   role: roles;
+  defaultAddressId?: number;
 }
 
 export interface ICategory {
@@ -25,4 +26,9 @@ export interface IColor extends ISize {}
 
 export interface ISuccessResponse {
   success: boolean;
+}
+
+export interface IAddress {
+  id: number;
+  value: string;
 }

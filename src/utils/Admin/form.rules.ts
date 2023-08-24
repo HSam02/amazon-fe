@@ -1,5 +1,5 @@
 import { Rule } from "antd/es/form";
-import { Regexes } from "../regexes";
+import { Regexpes } from "../regexpes";
 import {
   isCategoryExists,
   isColorExists,
@@ -13,7 +13,7 @@ const OnlyLettersRules: Rule[] = [
     message: "Please input Category's name!",
   },
   {
-    pattern: Regexes.ONLY_LETTERS,
+    pattern: Regexpes.ONLY_LETTERS,
     message: "Please input only letters!",
   },
 ];
