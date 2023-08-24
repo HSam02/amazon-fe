@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { AppLayout } from "../components/features/AppLayout";
 import { Login, Register, Admin } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
@@ -10,39 +11,45 @@ const createRouter = ({ user, status }: IUserState) => {
   return createBrowserRouter([
     {
       path: "/",
-      element: <>home</>,
-    },
-    {
-      path: "/auth",
-      element: (
-        <ProtectedRoute
-          isAllowed={user === null}
-          isLoading={isUserLoading}
-          redirectPath="/"
-        />
-      ),
+      element: <AppLayout />,
       children: [
         {
-          path: "login",
-          element: <Login />,
+          path: "/",
+          element: <>home</>,
         },
         {
-          path: "register",
-          element: <Register />,
+          path: "/auth",
+          element: (
+            <ProtectedRoute
+              isAllowed={user === null}
+              isLoading={isUserLoading}
+              redirectPath="/"
+            />
+          ),
+          children: [
+            {
+              path: "login",
+              element: <Login />,
+            },
+            {
+              path: "register",
+              element: <Register />,
+            },
+          ],
+        },
+        {
+          path: "/admin",
+          element: (
+            <ProtectedRoute
+              isAllowed={user?.role === roles.ADMIN}
+              isLoading={isUserLoading}
+              redirectPath="/"
+            >
+              <Admin />
+            </ProtectedRoute>
+          ),
         },
       ],
-    },
-    {
-      path: "/admin",
-      element: (
-        <ProtectedRoute
-          isAllowed={user?.role === roles.ADMIN}
-          isLoading={isUserLoading}
-          redirectPath="/"
-        >
-          <Admin />
-        </ProtectedRoute>
-      ),
     },
   ]);
 };
