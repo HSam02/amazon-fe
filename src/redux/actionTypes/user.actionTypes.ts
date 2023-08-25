@@ -39,8 +39,21 @@ export interface ILogoutAction {
   type: typeof LOGOUT;
 }
 
+export const UPDATE_DEFAULT_ADDRESS = "userActionType/UPDATE_DEFAULT_ADDRESS";
+export interface IUpdateDefaultAddressAction {
+  type: typeof UPDATE_DEFAULT_ADDRESS;
+  payload: number;
+}
+
+export const EDIT_DEFAULT_ADDRESS = "userActionType/EDIT_DEFAULT_ADDRESS";
+export interface IEditDefaultAddressAction {
+  type: typeof EDIT_DEFAULT_ADDRESS;
+  payload: number;
+}
+
 export type userAction =
   | ISetUserDataAction
   | ISetUserErrorAction
   | ISetUserPendingAction
-  | ILogoutAction;
+  | ILogoutAction
+  | IEditDefaultAddressAction;

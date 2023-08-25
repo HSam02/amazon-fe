@@ -1,4 +1,4 @@
-import { requestStatus } from "../types/enums";
+import { adminTools, requestStatus } from "../types/enums";
 import { ISize } from "../types/interfaces";
 
 export interface ICreateCategoryRequest {
@@ -25,3 +25,10 @@ export interface IActionSize extends ISize {
 }
 
 export interface IActionColor extends IActionSize {}
+
+export interface IItem {
+  id: number;
+  title: string;
+  type: adminTools;
+  status: requestStatus;
+}

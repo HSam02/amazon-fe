@@ -77,3 +77,15 @@ export const changePassword = async (reqData: IChangePasswordRequest) => {
     throw error;
   }
 };
+
+export const updateDefaultAddress = async (id: number) => {
+  try {
+    const { data } = await appAxios.get<ISuccessResponse>(
+      authEndpoints.UPDATE_DEFAULT_ADDRESS + id
+    );
+
+    return data.success;
+  } catch (error) {
+    throw error;
+  }
+};

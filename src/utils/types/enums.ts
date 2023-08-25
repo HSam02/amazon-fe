@@ -28,3 +28,9 @@ export enum sideBarItemsKeys {
   ADMIN = "/admin",
   SIGN = "/auth/login",
 }
+
+export enum modalStatuses {
+  EDIT = "edit",
+  ADD = "add",
+  CLOSED = "closed",
+}

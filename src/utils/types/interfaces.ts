@@ -31,4 +31,5 @@ export interface ISuccessResponse {
 export interface IAddress {
   id: number;
   value: string;
+  status: requestStatus;
 }

@@ -15,7 +15,7 @@ import {
   createSize,
   updateSize,
 } from "../../../../../redux/actionCreators/sizes.actionCreators";
-import { IItem } from "..";
+import { IItem } from "../../../../../utils/Admin/interfaces";
 import {
   createColor,
   updateColor,

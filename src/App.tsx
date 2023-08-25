@@ -7,6 +7,7 @@ import createRouter from "./routes/routes";
 import { getCategories } from "./redux/actionCreators/categories.actionCreators";
 import { getSizes } from "./redux/actionCreators/sizes.actionCreators";
 import { getColors } from "./redux/actionCreators/colors.actionCreators";
+import { getAddresses } from "./redux/actionCreators/addresses.actionCreators";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,11 @@ export const App = () => {
     dispatch(getCategories());
     dispatch(getSizes());
     dispatch(getColors());
+    dispatch(getAddresses());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const router = useMemo(() => createRouter(userState), [userState]);
 
-  return (
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 };

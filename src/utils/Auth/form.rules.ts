@@ -1,6 +1,6 @@
 import { Rule } from "antd/es/form";
 import { checkEmail } from "../../services/auth.service";
-import { Regexpes } from "../regexpes";
+import { Regexps } from "../regexps";
 
 export const firstNameRules: Rule[] = [
   {
@@ -13,7 +13,7 @@ export const firstNameRules: Rule[] = [
     message: "Please input more than 2 and less than 15 letters",
   },
   {
-    pattern: Regexpes.ONLY_LETTERS,
+    pattern: Regexps.ONLY_LETTERS,
     message: "Please input only letters",
   },
 ];
@@ -29,7 +29,7 @@ export const lastNameRules: Rule[] = [
     message: "Please input more than 3 and less than 20 letters",
   },
   {
-    pattern: Regexpes.ONLY_LETTERS,
+    pattern: Regexps.ONLY_LETTERS,
     message: "Please input only letters",
   },
 ];
@@ -40,7 +40,7 @@ export const emailRules: Rule[] = [
     message: "Please input your email adress!",
   },
   {
-    pattern: Regexpes.EMAIL,
+    pattern: Regexps.EMAIL,
     message: "Please input valid email!",
   },
 ];
@@ -51,7 +51,7 @@ export const getEmailRulesWithCheck = (
   ...emailRules,
   () => ({
     async validator(_, value: string) {
-      if (!value.match(Regexpes.EMAIL)) {
+      if (!value.match(Regexps.EMAIL)) {
         return;
       }
       try {
@@ -82,7 +82,7 @@ export const codeRules: Rule[] = [
   {
     min: 6,
     max: 6,
-    pattern: Regexpes.ONLY_DIGITS,
+    pattern: Regexps.ONLY_DIGITS,
     message: "Please input 6 digit number!",
   },
 ];
@@ -98,7 +98,7 @@ export const passwordRules: Rule[] = [
     message: "Please input more than 8 and less than 16 letters",
   },
   {
-    pattern: Regexpes.PASSWORD,
+    pattern: Regexps.PASSWORD,
     message:
       "Please input only letters, digits, or special characters from the set @$!%*?&",
   },

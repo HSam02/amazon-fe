@@ -32,7 +32,8 @@ const userReducer = (
     }
     case actions.SET_USER_PENDING: {
       return {
-        user: null,
+        // user: null,
+        ...state,
         status: requestStatus.PENDING,
       };
     }
@@ -42,6 +43,17 @@ const userReducer = (
         user: null,
         status: requestStatus.SUCCESS,
       };
+    }
+    case actions.EDIT_DEFAULT_ADDRESS: {
+      return state.user
+        ? {
+            status: requestStatus.SUCCESS,
+            user: {
+              ...state.user,
+              defaultAddressId: action.payload,
+            },
+          }
+        : state;
     }
     default: {
       return state;

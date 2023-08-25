@@ -2,29 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Popconfirm, Space, Typography } from "antd";
 import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { LoadingIcon } from "../../../shared/LoadingIcon";
+import { LoadingIcon } from "../../../shared/Loading/LoadingIcon";
 import { FormModal } from "./FormModal";
+import { adminTools, modalStatuses, requestStatus } from "../../../../utils/types/enums";
+import { IItem } from "../../../../utils/Admin/interfaces";
 import { deleteCategory } from "../../../../redux/actionCreators/categories.actionCreators";
-import { adminTools, requestStatus } from "../../../../utils/types/enums";
 import { deleteSize } from "../../../../redux/actionCreators/sizes.actionCreators";
 import { deleteColor } from "../../../../redux/actionCreators/colors.actionCreators";
 
 type TreeItemProps = {
   item: IItem;
 };
-
-enum modalStatuses {
-  EDIT = "edit",
-  ADD = "add",
-  CLOSED = "closed",
-}
-
-export interface IItem {
-  id: number;
-  title: string;
-  type: adminTools;
-  status: requestStatus;
-}
 
 export const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
   const dispatch = useDispatch();

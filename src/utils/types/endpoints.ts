@@ -5,6 +5,7 @@ export const enum authEndpoints {
   VERIFY = "/auth/verify/",
   CHECK_EMAIL = "/auth/check/",
   CHANGE_PASSWORD = "/auth/change",
+  UPDATE_DEFAULT_ADDRESS = "/auth/set-address/",
 }
 
 export enum sizeEndpoints {
@@ -26,4 +27,11 @@ export enum categoryEndpoints {
   CREATE = "/category",
   UPDATE = "/category/",
   REMOVE = "/category/",
+}
+
+export enum addressEndpoints {
+  GET_ALL = "/address",
+  CREATE = "/address",
+  UPDATE = "/address/",
+  REMOVE = "/address/",
 }

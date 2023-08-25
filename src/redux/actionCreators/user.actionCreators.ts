@@ -38,3 +38,17 @@ export const setUserPending = (): actions.ISetUserPendingAction => ({
 export const logout = (): actions.ILogoutAction => ({
   type: actions.LOGOUT,
 });
+
+export const updateDefaultAddress = (
+  value: number
+): actions.IUpdateDefaultAddressAction => ({
+  type: actions.UPDATE_DEFAULT_ADDRESS,
+  payload: value,
+});
+
+export const editDefaultAddress = (
+  value: number
+): actions.IEditDefaultAddressAction => ({
+  type: actions.EDIT_DEFAULT_ADDRESS,
+  payload: value,
+});
