@@ -4,6 +4,7 @@ import { Login, Register, Admin, Settings } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
+import { MyStore } from "../pages/MyStore";
 
 const createRouter = ({ user, status }: IUserState) => {
   const isUserLoading =
@@ -62,6 +63,10 @@ const createRouter = ({ user, status }: IUserState) => {
             {
               path: "settings",
               element: <Settings />,
+            },
+            {
+              path: "store",
+              element: <MyStore />,
             },
           ],
         },

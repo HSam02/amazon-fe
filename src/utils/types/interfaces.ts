@@ -33,3 +33,27 @@ export interface IAddress {
   value: string;
   status: requestStatus;
 }
+
+export interface IImage {
+  id: number;
+  url: string;
+}
+
+export interface IProduct {
+  id: number;
+  name: string;
+  description: string | null;
+  brand: string;
+  price: string;
+  isAvailable: boolean;
+  user: Omit<IUser, "email" | "role" | "defaultAddressId">;
+  category: {
+    id: string;
+    title: string;
+  };
+  defaultImg: IImage;
+  images: IImage[];
+  sizes: Omit<ISize, "status">;
+  colors: Omit<IColor, "status">;
+  status: requestStatus;
+}

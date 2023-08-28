@@ -35,3 +35,11 @@ export enum addressEndpoints {
   UPDATE = "/address/",
   REMOVE = "/address/",
 }
+
+export enum productEndpoints {
+  GET_ALL = "/product",
+  GET_MY = "/product/my",
+  CREATE = "/product",
+  UPDATE = "/product/",
+  REMOVE = "/product/",
+}
