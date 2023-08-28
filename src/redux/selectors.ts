@@ -9,3 +9,5 @@ export const selectSizes = (state: AppState) => state.sizes;
 export const selectColors = (state: AppState) => state.colors;
 
 export const selectAddresses = (state: AppState) => state.addresses;
+
+export const selectProducts = (state: AppState) => state.products;
