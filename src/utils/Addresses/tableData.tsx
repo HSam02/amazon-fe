@@ -17,7 +17,11 @@ export const columns: ColumnsType<AddressDataType> = [
         <Typography.Text
           type={record.status === requestStatus.ERROR ? "danger" : undefined}
         >
-          {`${record.address}${index === 0 ? " (default)" : ""}`}
+          {`${record.address}${
+            index === 0 && !record.address.includes("You have no")
+              ? " (default)"
+              : ""
+          }`}
         </Typography.Text>
       </Space>
     ),
@@ -59,7 +63,7 @@ export const getDataSource = (
         status: address.status,
       }))
     );
-  } else {
+  } else if (!defaultAddress) {
     data[0].address = "You have no addresses";
   }
 

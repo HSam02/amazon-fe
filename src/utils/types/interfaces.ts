@@ -50,8 +50,8 @@ export interface IProduct {
   category: {
     id: string;
     title: string;
-  };
-  defaultImg: IImage;
+  } | null;
+  defaultImg: IImage | null;
   images: IImage[];
   sizes: Omit<ISize, "status">;
   colors: Omit<IColor, "status">;
