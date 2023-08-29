@@ -1,8 +1,12 @@
-import { IProduct } from "../../utils/types/interfaces";
+import { IGetProductsResponse } from "../../utils/Products/interfaces";
+import { IPagination, IProduct } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/products.actionTypes";
 
-export const getUserProducts = (): actions.IGetUserProductsAction => ({
+export const getUserProducts = (
+  pagination?: IPagination
+): actions.IGetUserProductsAction => ({
   type: actions.GET_USER_PRODUCTS,
+  payload: pagination,
 });
 
 export const createProduct = (
@@ -25,10 +29,10 @@ export const deleteProduct = (id: number): actions.IDeleteProductAction => ({
 });
 
 export const setProducts = (
-  products: IProduct[] | null
+  response: IGetProductsResponse
 ): actions.ISetProductsAction => ({
   type: actions.SET_PRODUCTS,
-  payload: products,
+  payload: response,
 });
 
 export const addProduct = (product: IProduct): actions.IAddProductAction => ({

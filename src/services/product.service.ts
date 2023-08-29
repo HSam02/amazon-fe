@@ -1,6 +1,10 @@
 import { IProductUpdateResponse } from "../utils/Products/interfaces";
 import { productEndpoints } from "../utils/types/endpoints";
-import { IProduct, ISuccessResponse } from "../utils/types/interfaces";
+import {
+  IPagination,
+  IProduct,
+  ISuccessResponse,
+} from "../utils/types/interfaces";
 import appAxios from "./axios.service";
 
 export const createProduct = async (reqData: FormData) => {
@@ -41,9 +45,11 @@ export const deleteProduct = async (id: number) => {
   }
 };
 
-export const getUserProducts = async () => {
+export const getUserProducts = async (params?: IPagination) => {
   try {
-    const { data } = await appAxios.get<IProduct[]>(productEndpoints.GET_MY);
+    const { data } = await appAxios.get<IProduct[]>(productEndpoints.GET_MY, {
+      params,
+    });
 
     return data;
   } catch (error) {

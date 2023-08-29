@@ -1,4 +1,4 @@
-import { IProduct, ISuccessResponse } from "../types/interfaces";
+import { IPagination, IProduct, ISuccessResponse } from "../types/interfaces";
 
 export interface IProductCreateSchema {
   name: string;
@@ -26,4 +26,9 @@ export interface IProductUpdateSchema {
 
 export interface IProductUpdateResponse extends ISuccessResponse {
   product?: IProduct;
+}
+
+export interface IGetProductsResponse {
+  products: IProduct[];
+  pagination: IPagination;
 }

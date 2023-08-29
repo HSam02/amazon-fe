@@ -1,23 +1,26 @@
 import { call, fork, put, takeEvery } from "redux-saga/effects";
-import * as actionTypes from "../actionTypes/products.actionTypes";
-import * as actionCreators from "../actionCreators/products.actionCreators";
 import { IProduct } from "../../utils/types/interfaces";
 import {
-  createProduct,
-  deleteProduct,
-  updateProduct,
-} from "../../services/product.service";
-import {
-  IProductCreateSchema,
+  IGetProductsResponse,
   IProductUpdateResponse,
 } from "../../utils/Products/interfaces";
 import { requestStatus } from "../../utils/types/enums";
+import {
+  createProduct,
+  deleteProduct,
+  getUserProducts,
+  updateProduct,
+} from "../../services/product.service";
+import * as actionTypes from "../actionTypes/products.actionTypes";
+import * as actionCreators from "../actionCreators/products.actionCreators";
 
-function* getUserProductsAsync() {
+function* getUserProductsAsync({
+  payload,
+}: actionTypes.IGetUserProductsAction) {
   try {
     yield put(actionCreators.setProductsPending());
-    const products: IProduct[] = yield call(actionCreators.getUserProducts);
-    yield put(actionCreators.setProducts(products));
+    const data: IGetProductsResponse = yield call(getUserProducts, payload);
+    yield put(actionCreators.setProducts(data));
   } catch (error) {
     yield put(actionCreators.setProductsError());
   }

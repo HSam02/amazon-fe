@@ -1,14 +1,16 @@
 import { requestStatus } from "../../utils/types/enums";
-import { IProduct } from "../../utils/types/interfaces";
+import { IPagination, IProduct } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/products.actionTypes";
 
 interface IProductState {
   products: IProduct[] | null;
+  pagination: IPagination | null;
   status: requestStatus;
 }
 
 const initialState: IProductState = {
   products: null,
+  pagination: null,
   status: requestStatus.IDLE,
 };
 
@@ -32,13 +34,15 @@ const productsReducer = (
     }
 
     case actions.SET_PRODUCTS: {
+      const { pagination, products } = action.payload;
       return {
-        products: action.payload
-          ? action.payload.map((product) => ({
+        products: products
+          ? products.map((product) => ({
               ...product,
               status: requestStatus.SUCCESS,
             }))
           : null,
+        pagination,
         status: requestStatus.SUCCESS,
       };
     }

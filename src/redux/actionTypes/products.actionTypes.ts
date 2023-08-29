@@ -1,8 +1,10 @@
-import { IProduct } from "../../utils/types/interfaces";
+import { IGetProductsResponse } from "../../utils/Products/interfaces";
+import { IPagination, IProduct } from "../../utils/types/interfaces";
 
 export const GET_USER_PRODUCTS = "productsActionType/GET_USER_PRODUCTS";
 export interface IGetUserProductsAction {
   type: typeof GET_USER_PRODUCTS;
+  payload?: IPagination;
 }
 
 export const CREATE_PRODUCT = "productsActionTypes/CREATE_PRODUCT";
@@ -26,7 +28,7 @@ export interface IDeleteProductAction {
 export const SET_PRODUCTS = "productsActionTypes/SET_PRODUCTS";
 export interface ISetProductsAction {
   type: typeof SET_PRODUCTS;
-  payload: IProduct[] | null;
+  payload: IGetProductsResponse;
 }
 
 export const ADD_PRODUCT = "productsActionTypes/ADD_PRODUCT";

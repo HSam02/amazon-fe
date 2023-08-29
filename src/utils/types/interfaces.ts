@@ -57,3 +57,8 @@ export interface IProduct {
   colors: Omit<IColor, "status">;
   status: requestStatus;
 }
+
+export interface IPagination {
+  count: number;
+  page: number;
+}
