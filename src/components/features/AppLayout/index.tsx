@@ -20,7 +20,7 @@ export const AppLayout = () => {
   );
 
   useEffect(() => {
-    const keys = new Object(sideBarItemsKeys) as { [key: string]: string };
+    const keys = Object(sideBarItemsKeys) as { [key: string]: string };
     delete keys["USER"];
 
     if (pathname === "/") {

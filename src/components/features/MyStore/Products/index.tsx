@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Product } from "../../../shared/Product";
+import { Product } from "../../Product";
 import { selectProducts } from "../../../../redux/selectors";
 import { Space, Typography } from "antd";
 import scss from "./Products.module.scss";

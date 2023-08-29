@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUserProducts } from "../../redux/actionCreators/products.actionCreators";
-import { Product } from "../../components/shared/Product";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../redux/selectors";
 import { requestStatus } from "../../utils/types/enums";

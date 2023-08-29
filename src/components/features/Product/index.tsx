@@ -1,9 +1,7 @@
-import { Button, Card, Carousel, Image } from "antd";
+import { Button, Card, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import { Images } from "./Images";
+import { AppImage } from "../../shared/AppImage";
 import { IProduct } from "../../../utils/types/interfaces";
-import Typography from "antd/es/typography/Typography";
-import { AppImage } from "../AppImage";
 
 type ProductProps = {
   product: IProduct;
@@ -15,10 +13,14 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
       cover={<AppImage url={product.defaultImg?.url} preview={false} />}
       actions={[<Button>Edit</Button>, <Button>Delete</Button>]}
     >
-      <Typography>{product.category?.title}</Typography>
+      <Typography.Text>{product.category?.title}</Typography.Text>
       <Meta
         title={product.name}
-        description={product.description || "No description"}
+        description={
+          <Typography.Text ellipsis type="secondary">
+            {product.description || "No description"}
+          </Typography.Text>
+        }
       />
     </Card>
   );

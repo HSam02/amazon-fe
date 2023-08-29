@@ -1,4 +1,4 @@
-import { Empty, Image, ImageProps, Skeleton } from "antd";
+import { Image, ImageProps, Skeleton } from "antd";
 import scss from "./AppImage.module.scss";
 
 type AppImageProps = {
@@ -8,11 +8,9 @@ type AppImageProps = {
 export const AppImage: React.FC<AppImageProps> = ({ url, ...props }) => {
   return url ? (
     <Image
-      style={{
-        height: "300px",
-      }}
-      {...props}
+      rootClassName={scss.image}
       src={process.env.REACT_APP_BASE_URL + url.slice(1)}
+      {...props}
     />
   ) : (
     <Skeleton.Image

@@ -1,8 +1,17 @@
+.image {
+  height: 400px !important;
+
+  >img {
+    height: 100% !important;
+    object-fit: cover;
+  }
+}
+
 .rootSkeleton {
   width: 100% !important;
 }
 
 .skeleton {
   width: 100% !important;
-  height: 300px !important;
+  height: 400px !important;
 }

@@ -58,7 +58,6 @@ const otherItems: ItemType<MenuItemType>[] = [
     icon: <SearchOutlined />,
     label: "Search",
   },
-
   {
     key: sideBarItemsKeys.CART,
     icon: <ShoppingCartOutlined />,
