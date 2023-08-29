@@ -1,3 +1,4 @@
+import { IProductUpdateResponse } from "../utils/Products/interfaces";
 import { productEndpoints } from "../utils/types/endpoints";
 import { IProduct, ISuccessResponse } from "../utils/types/interfaces";
 import appAxios from "./axios.service";
@@ -17,12 +18,12 @@ export const createProduct = async (reqData: FormData) => {
 
 export const updateProduct = async (id: number, reqData: FormData) => {
   try {
-    const { data } = await appAxios.patch<ISuccessResponse>(
+    const { data } = await appAxios.patch<IProductUpdateResponse>(
       productEndpoints.UPDATE + id,
       reqData
     );
 
-    return data.success;
+    return data;
   } catch (error) {
     throw error;
   }

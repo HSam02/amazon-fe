@@ -38,7 +38,7 @@ export interface IAddProductAction {
 export const EDIT_PRODUCT = "productsActionTypes/EDIT_PRODUCT";
 export interface IEditProductAction {
   type: typeof EDIT_PRODUCT;
-  payload: Partial<IProduct>;
+  payload: Partial<IProduct> & { editingId?: number };
 }
 
 export const REMOVE_PRODUCT = "productsActionTypes/REMOVE_PRODUCT";

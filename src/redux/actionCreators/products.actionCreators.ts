@@ -37,7 +37,7 @@ export const addProduct = (product: IProduct): actions.IAddProductAction => ({
 });
 
 export const editProduct = (
-  product: Partial<IProduct>
+  product: Partial<IProduct> & { editingId?: number }
 ): actions.IEditProductAction => ({
   type: actions.EDIT_PRODUCT,
   payload: product,

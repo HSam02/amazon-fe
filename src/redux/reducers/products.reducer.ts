@@ -33,7 +33,12 @@ const productsReducer = (
 
     case actions.SET_PRODUCTS: {
       return {
-        products: action.payload,
+        products: action.payload
+          ? action.payload.map((product) => ({
+              ...product,
+              status: requestStatus.SUCCESS,
+            }))
+          : null,
         status: requestStatus.SUCCESS,
       };
     }
@@ -48,12 +53,13 @@ const productsReducer = (
     }
 
     case actions.EDIT_PRODUCT: {
-      const { id } = action.payload;
+      const { id, editingId, ...newData } = action.payload;
+      const editId = editingId || id;
       return state.products
         ? {
             ...state,
             products: state.products.map((product) =>
-              product.id === id ? { ...product, ...action.payload } : product
+              product.id === editId ? { ...product, ...newData } : product
             ),
           }
         : state;
