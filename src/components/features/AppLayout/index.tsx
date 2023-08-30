@@ -4,6 +4,8 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Menu, Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
+import { PlusOutlined } from "@ant-design/icons";
+import { ProductForm } from "../MyStore/ProductForm";
 import getSideBarItems from "../../../utils/Layout/sidebarItems";
 import { roles, sideBarItemsKeys } from "../../../utils/types/enums";
 import { selectUser } from "../../../redux/selectors";
@@ -13,11 +15,24 @@ export const AppLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const items = useMemo(
-    () => getSideBarItems(user ? user.role : roles.GUEST),
-    [user]
-  );
+  const items = useMemo(() => {
+    const items = getSideBarItems(user ? user.role : roles.GUEST);
+    if (user?.role !== roles.GUEST) {
+      items.push({
+        key: "add",
+        icon: <PlusOutlined />,
+        label: "Add Product",
+
+        onClick: (e) => {
+          e.domEvent.preventDefault();
+          setIsModalOpen(true);
+        },
+      });
+    }
+    return items;
+  }, [user]);
 
   useEffect(() => {
     const keys = Object(sideBarItemsKeys) as { [key: string]: string };
@@ -38,22 +53,28 @@ export const AppLayout = () => {
   }, [pathname]);
 
   return (
-    <Layout style={{ minHeight: "100vh", backgroundColor: "unset" }}>
-      <Sider breakpoint="lg">
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={selectedKeys}
-          items={items}
-          onSelect={({ key }) => {
-            navigate(key);
-            setSelectedKeys([key]);
-          }}
-        />
-      </Sider>
-      <Content>
-        <Outlet />
-      </Content>
-    </Layout>
+    <>
+      <Layout style={{ minHeight: "100vh", backgroundColor: "unset" }}>
+        <Sider breakpoint="lg">
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={selectedKeys}
+            items={items}
+            onSelect={({ key }) => {
+              if (key === "add") {
+                return;
+              }
+              navigate(key);
+              setSelectedKeys([key]);
+            }}
+          />
+        </Sider>
+        <Content>
+          <Outlet />
+        </Content>
+      </Layout>
+      {isModalOpen && <ProductForm onClose={() => setIsModalOpen(false)} />}
+    </>
   );
 };

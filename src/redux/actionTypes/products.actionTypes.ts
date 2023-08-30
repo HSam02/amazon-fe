@@ -16,7 +16,7 @@ export interface ICreateProductAction {
 export const UPDATE_PRODUCT = "productsActionTypes/UPDATE_PRODUCT";
 export interface IUpdateProductAction {
   type: typeof UPDATE_PRODUCT;
-  payload: FormData;
+  payload: { id: number; formData: FormData };
 }
 
 export const DELETE_PRODUCT = "productsActionTypes/DELETE_PRODUCT";

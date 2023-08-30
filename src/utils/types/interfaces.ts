@@ -48,13 +48,13 @@ export interface IProduct {
   isAvailable: boolean;
   user: Omit<IUser, "email" | "role" | "defaultAddressId">;
   category: {
-    id: string;
+    id: number;
     title: string;
   } | null;
   defaultImg: IImage | null;
   images: IImage[];
-  sizes: Omit<ISize, "status">;
-  colors: Omit<IColor, "status">;
+  sizes: Omit<ISize, "status">[];
+  colors: Omit<IColor, "status">[];
   status: requestStatus;
 }
 

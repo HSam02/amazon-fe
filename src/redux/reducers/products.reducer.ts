@@ -51,14 +51,19 @@ const productsReducer = (
       return {
         ...state,
         products: state.products
-          ? [action.payload, ...state.products.slice(0, -1)]
+          ? [
+              action.payload,
+              ...(state.products.length % 10 === 0
+                ? state.products.slice(0, -1)
+                : state.products),
+            ]
           : [action.payload],
       };
     }
 
     case actions.EDIT_PRODUCT: {
-      const { id, editingId, ...newData } = action.payload;
-      const editId = editingId || id;
+      const { editingId, ...newData } = action.payload;
+      const editId = editingId || newData.id;
       return state.products
         ? {
             ...state,

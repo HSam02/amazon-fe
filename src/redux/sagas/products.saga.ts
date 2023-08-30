@@ -27,13 +27,19 @@ function* getUserProductsAsync({
 }
 
 function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
-  const newProduct = JSON.parse(
-    payload.get("newProduct") as string
+  const { name, description, category, price } = JSON.parse(
+    payload.get("data") as string
   ) as IProduct;
+  const tempId = Math.random();
+
   try {
     yield put(
       actionCreators.addProduct({
-        ...newProduct,
+        id: tempId,
+        name,
+        description,
+        category,
+        price,
         status: requestStatus.PENDING,
       } as IProduct)
     );
@@ -41,14 +47,15 @@ function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
     yield put(
       actionCreators.editProduct({
         ...product,
-        editingId: newProduct.id,
+        editingId: tempId,
         status: requestStatus.SUCCESS,
       })
     );
   } catch (error) {
+    alert("The Product not added");
     yield put(
       actionCreators.editProduct({
-        id: newProduct.id,
+        id: tempId,
         status: requestStatus.ERROR,
       })
     );
@@ -56,9 +63,9 @@ function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
 }
 
 function* updateProductAsync({ payload }: actionTypes.IUpdateProductAction) {
-  const id = JSON.parse(payload.get("data") as string).id as number;
+  const { id, formData } = payload;
   try {
-    put(
+    yield put(
       actionCreators.editProduct({
         id,
         status: requestStatus.PENDING,
@@ -67,7 +74,7 @@ function* updateProductAsync({ payload }: actionTypes.IUpdateProductAction) {
     const { success, product }: IProductUpdateResponse = yield call(
       updateProduct,
       id,
-      payload
+      formData
     );
     if (!success || !product) {
       throw new Error("The Product not updated");

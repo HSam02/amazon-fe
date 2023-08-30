@@ -17,10 +17,11 @@ export const createProduct = (
 });
 
 export const updateProduct = (
+  id: number,
   formData: FormData
 ): actions.IUpdateProductAction => ({
   type: actions.UPDATE_PRODUCT,
-  payload: formData,
+  payload: { formData, id },
 });
 
 export const deleteProduct = (id: number): actions.IDeleteProductAction => ({
