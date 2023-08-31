@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useCategoryTreeData from "../../../../utils/Products/useCategoryTreeData";
 import {
+  Checkbox,
   Form,
   Input,
   Modal,
@@ -18,6 +19,13 @@ import {
 } from "../../../../redux/actionCreators/products.actionCreators";
 import { IProduct } from "../../../../utils/types/interfaces";
 import { IProductUpdateSchema } from "../../../../utils/Products/interfaces";
+import {
+  brandRules,
+  descriptionRules,
+  nameRules,
+  priceRules,
+  requiredRule,
+} from "../../../../utils/Products/form.rules";
 
 type ProductFormProps = {
   product?: IProduct;
@@ -39,6 +47,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onSubmit = (values: any) => {
     if (!values.description) {
       values.description = null;
+    } else {
+      values.description = values.description.trim();
     }
     const formData = new FormData();
 
@@ -114,19 +124,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       onOk={() => form.submit()}
     >
       <Form form={form} onFinish={onSubmit} initialValues={initialValues}>
-        <Form.Item name="name">
+        <Form.Item name="name" rules={nameRules}>
           <Input placeholder="Name" />
         </Form.Item>
-        <Form.Item name="description">
-          <Input placeholder="Description" />
+        <Form.Item name="description" rules={descriptionRules}>
+          <Input.TextArea
+            maxLength={150}
+            style={{ maxHeight: 100 }}
+            autoSize
+            placeholder="Description"
+          />
         </Form.Item>
-        <Form.Item name="brand">
+        <Form.Item name="brand" rules={brandRules}>
           <Input placeholder="Brand" />
         </Form.Item>
-        <Form.Item name="price">
+        <Form.Item name="price" rules={priceRules}>
           <Input placeholder="Price" />
         </Form.Item>
-        <Form.Item name="categoryId">
+        <Form.Item name="categoryId" rules={[requiredRule]}>
           <TreeSelect
             placeholder="Category"
             defaultValue={undefined}
@@ -134,7 +149,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             treeData={categories}
           />
         </Form.Item>
-        <Form.Item name="colorIds">
+        <Form.Item name="colorIds" rules={[requiredRule]}>
           <Select
             placeholder="Colors"
             options={colors?.map((size) => ({
@@ -146,7 +161,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             mode="multiple"
           />
         </Form.Item>
-        <Form.Item name="sizeIds">
+        <Form.Item name="sizeIds" rules={[requiredRule]}>
           <Select
             placeholder="Sizes"
             options={sizes?.map((size) => ({
@@ -157,6 +172,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             allowClear
             mode="multiple"
           />
+        </Form.Item>
+        <Form.Item name="isAvailable" valuePropName="checked">
+          <Checkbox>Publish</Checkbox>
         </Form.Item>
         <Form.Item>
           <Upload

@@ -19,7 +19,7 @@ export const AppLayout = () => {
 
   const items = useMemo(() => {
     const items = getSideBarItems(user ? user.role : roles.GUEST);
-    if (user?.role !== roles.GUEST) {
+    if (user && user.role !== roles.GUEST) {
       items.push({
         key: "add",
         icon: <PlusOutlined />,
