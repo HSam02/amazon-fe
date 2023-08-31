@@ -1,4 +1,4 @@
-import { call, fork, put, takeEvery } from "redux-saga/effects";
+import { call, fork, put, takeEvery, takeLeading } from "redux-saga/effects";
 import { IProduct } from "../../utils/types/interfaces";
 import {
   IGetProductsResponse,
@@ -111,7 +111,7 @@ function* deleteProductAsync({ payload }: actionTypes.IDeleteProductAction) {
 }
 
 function* watchProducts() {
-  yield takeEvery(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
+  yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
   yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
   yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
   yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);

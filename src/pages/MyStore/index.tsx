@@ -9,13 +9,16 @@ import { Products } from "../../components/features/MyStore/Products";
 
 export const MyStore = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector(selectProducts);
+  const { products, status } = useSelector(selectProducts);
 
   useEffect(() => {
     dispatch(getUserProducts());
   }, []);
 
-  if (status === requestStatus.PENDING || status === requestStatus.IDLE) {
+  if (
+    (status === requestStatus.PENDING || status === requestStatus.IDLE) &&
+    !products
+  ) {
     return <Loading />;
   }
 

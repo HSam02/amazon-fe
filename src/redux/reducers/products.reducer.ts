@@ -35,13 +35,14 @@ const productsReducer = (
 
     case actions.SET_PRODUCTS: {
       const { pagination, products } = action.payload;
+      const newProducts = products.map((product) => ({
+        ...product,
+        status: requestStatus.SUCCESS,
+      }));
       return {
-        products: products
-          ? products.map((product) => ({
-              ...product,
-              status: requestStatus.SUCCESS,
-            }))
-          : null,
+        products: state.products
+          ? [...state.products, ...newProducts]
+          : newProducts,
         pagination,
         status: requestStatus.SUCCESS,
       };

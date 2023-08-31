@@ -61,4 +61,5 @@ export interface IProduct {
 export interface IPagination {
   count: number;
   page: number;
+  limit: number;
 }
