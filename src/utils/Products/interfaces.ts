@@ -32,3 +32,7 @@ export interface IGetProductsResponse {
   products: IProduct[];
   pagination: IPagination;
 }
+
+export type ProductFilterType = Partial<
+  Omit<IProductCreateSchema, "isAvailable" | "description" | "price">
+>;

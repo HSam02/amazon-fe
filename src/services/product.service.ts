@@ -1,4 +1,8 @@
-import { IProductUpdateResponse } from "../utils/Products/interfaces";
+import {
+  IGetProductsResponse,
+  IProductUpdateResponse,
+  ProductFilterType,
+} from "../utils/Products/interfaces";
 import { productEndpoints } from "../utils/types/endpoints";
 import {
   IPagination,
@@ -47,9 +51,37 @@ export const deleteProduct = async (id: number) => {
 
 export const getUserProducts = async (params?: IPagination) => {
   try {
-    const { data } = await appAxios.get<IProduct[]>(productEndpoints.GET_MY, {
-      params,
-    });
+    const { data } = await appAxios.get<IGetProductsResponse>(
+      productEndpoints.GET_MY,
+      {
+        params: {
+          limit: params?.limit,
+          page: params?.page,
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllProducts = async (
+  params?: IPagination,
+  filters?: ProductFilterType
+) => {
+  try {
+    const { data } = await appAxios.get<IGetProductsResponse>(
+      productEndpoints.GET_ALL,
+      {
+        params: {
+          limit: params?.limit,
+          page: params?.page,
+          ...filters,
+        },
+      }
+    );
 
     return data;
   } catch (error) {

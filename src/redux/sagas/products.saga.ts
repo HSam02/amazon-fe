@@ -1,4 +1,11 @@
-import { call, fork, put, takeEvery, takeLeading } from "redux-saga/effects";
+import {
+  call,
+  fork,
+  put,
+  takeEvery,
+  takeLatest,
+  takeLeading,
+} from "redux-saga/effects";
 import { IProduct } from "../../utils/types/interfaces";
 import {
   IGetProductsResponse,
@@ -8,6 +15,7 @@ import { requestStatus } from "../../utils/types/enums";
 import {
   createProduct,
   deleteProduct,
+  getAllProducts,
   getUserProducts,
   updateProduct,
 } from "../../services/product.service";
@@ -20,6 +28,24 @@ function* getUserProductsAsync({
   try {
     yield put(actionCreators.setProductsPending());
     const data: IGetProductsResponse = yield call(getUserProducts, payload);
+    yield put(actionCreators.setProducts(data));
+  } catch (error) {
+    yield put(actionCreators.setProductsError());
+  }
+}
+
+function* getAllProductsAsync({ payload }: actionTypes.IGetAllProductsAction) {
+  const { filters, pagination } = payload;
+  try {
+    if (!pagination) {
+      yield put(actionCreators.clearProductsSlice());
+    }
+    yield put(actionCreators.setProductsPending());
+    const data: IGetProductsResponse = yield call(
+      getAllProducts,
+      pagination,
+      filters
+    );
     yield put(actionCreators.setProducts(data));
   } catch (error) {
     yield put(actionCreators.setProductsError());
@@ -112,6 +138,7 @@ function* deleteProductAsync({ payload }: actionTypes.IDeleteProductAction) {
 
 function* watchProducts() {
   yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
+  yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
   yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
   yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
   yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);

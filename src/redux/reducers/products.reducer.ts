@@ -86,6 +86,10 @@ const productsReducer = (
         : state;
     }
 
+    case actions.CLEAR_PRODUCTS_SLICE: {
+      return initialState;
+    }
+
     default: {
       return state;
     }

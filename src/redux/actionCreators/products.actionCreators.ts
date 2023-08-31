@@ -1,4 +1,7 @@
-import { IGetProductsResponse } from "../../utils/Products/interfaces";
+import {
+  IGetProductsResponse,
+  ProductFilterType,
+} from "../../utils/Products/interfaces";
 import { IPagination, IProduct } from "../../utils/types/interfaces";
 import * as actions from "../actionTypes/products.actionTypes";
 
@@ -7,6 +10,14 @@ export const getUserProducts = (
 ): actions.IGetUserProductsAction => ({
   type: actions.GET_USER_PRODUCTS,
   payload: pagination,
+});
+
+export const getAllProducts = (
+  pagination?: IPagination,
+  filters?: ProductFilterType
+): actions.IGetAllProductsAction => ({
+  type: actions.GET_ALL_PRODUCTS,
+  payload: { pagination, filters },
 });
 
 export const createProduct = (
@@ -59,4 +70,8 @@ export const setProductsPending = (): actions.ISetProductsPendingAction => ({
 
 export const setProductsError = (): actions.ISetProductsErrorAction => ({
   type: actions.SET_PRODUCTS_ERROR,
+});
+
+export const clearProductsSlice = (): actions.IClearProductsSliceAction => ({
+  type: actions.CLEAR_PRODUCTS_SLICE,
 });

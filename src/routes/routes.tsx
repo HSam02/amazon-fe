@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "../components/features/AppLayout";
-import { Login, Register, Admin, Settings } from "../pages/";
+import { Login, Register, Admin, Settings, Home } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
@@ -16,7 +16,7 @@ const createRouter = ({ user, status }: IUserState) => {
       children: [
         {
           path: "/",
-          element: <>home</>,
+          element: <Home />,
         },
         {
           path: "/auth",

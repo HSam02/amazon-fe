@@ -1,10 +1,19 @@
-import { IGetProductsResponse } from "../../utils/Products/interfaces";
+import {
+  IGetProductsResponse,
+  ProductFilterType,
+} from "../../utils/Products/interfaces";
 import { IPagination, IProduct } from "../../utils/types/interfaces";
 
 export const GET_USER_PRODUCTS = "productsActionType/GET_USER_PRODUCTS";
 export interface IGetUserProductsAction {
   type: typeof GET_USER_PRODUCTS;
   payload?: IPagination;
+}
+
+export const GET_ALL_PRODUCTS = "productsActionType/GET_ALL_PRODUCTS";
+export interface IGetAllProductsAction {
+  type: typeof GET_ALL_PRODUCTS;
+  payload: { pagination?: IPagination; filters?: ProductFilterType };
 }
 
 export const CREATE_PRODUCT = "productsActionTypes/CREATE_PRODUCT";
@@ -59,10 +68,16 @@ export interface ISetProductsErrorAction {
   type: typeof SET_PRODUCTS_ERROR;
 }
 
+export const CLEAR_PRODUCTS_SLICE = "productsActionTypes/CLEAR_PRODUCTS_SLICE";
+export interface IClearProductsSliceAction {
+  type: typeof CLEAR_PRODUCTS_SLICE;
+}
+
 export type productsAction =
   | ISetProductsAction
   | ISetProductsPendingAction
   | ISetProductsErrorAction
   | IAddProductAction
   | IEditProductAction
-  | IRemoveProductAction;
+  | IRemoveProductAction
+  | IClearProductsSliceAction;
