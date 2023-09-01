@@ -1,4 +1,4 @@
-import { Products } from "../../components/features/MyStore/Products";
+import { Products } from "../../components/features/Products";
 
 export const MyStore = () => {
   return <Products />;

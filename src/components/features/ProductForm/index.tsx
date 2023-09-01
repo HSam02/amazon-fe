@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import useCategoryTreeData from "../../../../utils/Products/useCategoryTreeData";
+import useCategoryTreeData from "../../../utils/Products/useCategoryTreeData";
 import {
   Checkbox,
   Form,
@@ -12,20 +12,20 @@ import {
   UploadFile,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { selectColors, selectSizes } from "../../../../redux/selectors";
+import { selectColors, selectSizes } from "../../../redux/selectors";
 import {
   createProduct,
   updateProduct,
-} from "../../../../redux/actionCreators/products.actionCreators";
-import { IProduct } from "../../../../utils/types/interfaces";
-import { IProductUpdateSchema } from "../../../../utils/Products/interfaces";
+} from "../../../redux/actionCreators/products.actionCreators";
+import { IProduct } from "../../../utils/types/interfaces";
+import { IProductUpdateSchema } from "../../../utils/Products/interfaces";
 import {
   brandRules,
   descriptionRules,
   nameRules,
   priceRules,
   requiredRule,
-} from "../../../../utils/Products/form.rules";
+} from "../../../utils/Products/form.rules";
 
 type ProductFormProps = {
   product?: IProduct;

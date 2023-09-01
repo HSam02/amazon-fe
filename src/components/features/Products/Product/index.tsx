@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Button, Card, Popconfirm, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import { AppImage } from "../../shared/AppImage";
-import { IProduct } from "../../../utils/types/interfaces";
-import { requestStatus } from "../../../utils/types/enums";
+import { AppImage } from "../../../shared/AppImage";
+import { IProduct } from "../../../../utils/types/interfaces";
+import { requestStatus } from "../../../../utils/types/enums";
 import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../../redux/actionCreators/products.actionCreators";
-import { ProductForm } from "../MyStore/ProductForm";
+import { deleteProduct } from "../../../../redux/actionCreators/products.actionCreators";
+import { ProductForm } from "../../ProductForm";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../redux/selectors";
+import { selectUser } from "../../../../redux/selectors";
 
 type ProductProps = {
   product: IProduct;

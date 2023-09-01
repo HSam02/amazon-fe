@@ -5,7 +5,7 @@ import { Menu, Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { PlusOutlined } from "@ant-design/icons";
-import { ProductForm } from "../MyStore/ProductForm";
+import { ProductForm } from "../ProductForm";
 import getSideBarItems from "../../../utils/Layout/sidebarItems";
 import { roles, sideBarItemsKeys } from "../../../utils/types/enums";
 import { selectUser } from "../../../redux/selectors";

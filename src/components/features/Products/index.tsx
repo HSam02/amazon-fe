@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import useScrollEnd from "../../../../utils/Products/useScrollEnd";
+import useScrollEnd from "../../../utils/Products/useScrollEnd";
 import { Space, Typography } from "antd";
-import { Product } from "../../Product";
-import { selectProducts } from "../../../../redux/selectors";
+import { Product } from "./Product";
+import { selectProducts } from "../../../redux/selectors";
 import {
   getAllProducts,
   getUserProducts,
-} from "../../../../redux/actionCreators/products.actionCreators";
-import { requestStatus } from "../../../../utils/types/enums";
-import { ProductFilterType } from "../../../../utils/Products/interfaces";
+} from "../../../redux/actionCreators/products.actionCreators";
+import { requestStatus } from "../../../utils/types/enums";
+import { ProductFilterType } from "../../../utils/Products/interfaces";
 import scss from "./Products.module.scss";
-import { Loading } from "../../../shared/Loading";
+import { Loading } from "../../shared/Loading";
 
 type ProductsProps = {
   filters?: ProductFilterType;

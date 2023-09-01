@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Space } from "antd";
 import { Filters } from "../../components/features/Filters";
-import { Products } from "../../components/features/MyStore/Products";
+import { Products } from "../../components/features/Products";
 import { ProductFilterType } from "../../utils/Products/interfaces";
 import scss from "./Home.module.scss";
 
