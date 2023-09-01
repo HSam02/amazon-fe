@@ -142,14 +142,18 @@ function* deleteProductAsync({ payload }: actionTypes.IDeleteProductAction) {
   }
 }
 
-function* watchProducts() {
-  yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
-  yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
-  yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
-  yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
-  yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);
-}
+// function* watchProducts() {
+//   yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
+//   yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
+//   yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
+//   yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
+//   yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);
+// }
 
-export default function* productsSaga() {
-  yield fork(watchProducts);
+export default function* () {
+  yield takeLatest(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
+  yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
+  yield takeLatest(actionTypes.CREATE_PRODUCT, createProductAsync);
+  yield takeLatest(actionTypes.UPDATE_PRODUCT, updateProductAsync);
+  yield takeLatest(actionTypes.DELETE_PRODUCT, deleteProductAsync);
 }

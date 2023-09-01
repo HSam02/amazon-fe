@@ -4,7 +4,7 @@ import useCategoryTreeData from "../../../utils/Products/useCategoryTreeData";
 import { Button, Form, Input, Select, Space, TreeSelect } from "antd";
 import { ProductFilterType } from "../../../utils/Products/interfaces";
 import { getAllProducts } from "../../../redux/actionCreators/products.actionCreators";
-import { selectProducts } from "../../../redux/selectors";
+import { selectColors, selectProducts, selectSizes } from "../../../redux/selectors";
 import scss from "./Filters.module.scss";
 
 type FiltersProps = {
@@ -16,8 +16,8 @@ type FiltersProps = {
 export const Filters: React.FC<FiltersProps> = ({ setFilters }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  // const { colors } = useSelector(selectColors);
-  // const { sizes } = useSelector(selectSizes);
+  const { colors } = useSelector(selectColors);
+  const { sizes } = useSelector(selectSizes);
   const { status } = useSelector(selectProducts);
   const categories = useCategoryTreeData();
 
@@ -52,7 +52,7 @@ export const Filters: React.FC<FiltersProps> = ({ setFilters }) => {
           treeData={categories}
         />
       </Form.Item>
-      {/* <Form.Item name="colorIds">
+      <Form.Item name="colorIds">
         <Select
           placeholder="Colors"
           options={colors?.map((size) => ({
@@ -75,7 +75,7 @@ export const Filters: React.FC<FiltersProps> = ({ setFilters }) => {
           allowClear
           mode="multiple"
         />
-      </Form.Item> */}
+      </Form.Item>
       <Space>
         <Button type="primary" htmlType="submit">
           Search
