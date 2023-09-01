@@ -43,3 +43,10 @@ export enum productEndpoints {
   UPDATE = "/product/",
   REMOVE = "/product/",
 }
+
+export enum cartEndpoints {
+  GET_MY = "/cart",
+  CREATE = "/cart",
+  UPDATE = "/cart/",
+  REMOVE = "/cart/",
+}

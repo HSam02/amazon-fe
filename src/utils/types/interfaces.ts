@@ -63,3 +63,12 @@ export interface IPagination {
   page: number;
   limit: number;
 }
+
+export interface ICartItem {
+  id: number;
+  product: Omit<IProduct, "status">;
+  size: Omit<ISize, "status">;
+  color: Omit<IColor, "status">;
+  quantity: number;
+  status: requestStatus;
+}
