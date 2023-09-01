@@ -1,6 +1,7 @@
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fill, 400px);
+  align-items: start;
   justify-content: center;
   grid-auto-rows: 1fr;
   height: 100vh;

@@ -7,6 +7,8 @@ import { requestStatus } from "../../../utils/types/enums";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../../redux/actionCreators/products.actionCreators";
 import { ProductForm } from "../MyStore/ProductForm";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/selectors";
 
 type ProductProps = {
   product: IProduct;
@@ -15,20 +17,25 @@ type ProductProps = {
 export const Product: React.FC<ProductProps> = ({ product }) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useSelector(selectUser);
   return (
     <>
       <Card
         cover={<AppImage url={product.defaultImg?.url} preview={false} />}
-        actions={[
-          <Button onClick={() => setIsModalOpen(true)}>Edit</Button>,
-          <Popconfirm
-            title="Delete Product"
-            description="Are you sure to delete this Product?"
-            onConfirm={() => dispatch(deleteProduct(product.id))}
-          >
-            <Button>Delete</Button>
-          </Popconfirm>,
-        ]}
+        actions={
+          product.user.id === user?.id
+            ? [
+                <Button onClick={() => setIsModalOpen(true)}>Edit</Button>,
+                <Popconfirm
+                  title="Delete Product"
+                  description="Are you sure to delete this Product?"
+                  onConfirm={() => dispatch(deleteProduct(product.id))}
+                >
+                  <Button>Delete</Button>
+                </Popconfirm>,
+              ]
+            : [<Button>Add to Cart</Button>, <Button>Buy Later</Button>]
+        }
         loading={product.status === requestStatus.PENDING}
         style={
           product.status === requestStatus.ERROR

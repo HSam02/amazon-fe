@@ -21,11 +21,15 @@ import {
 } from "../../services/product.service";
 import * as actionTypes from "../actionTypes/products.actionTypes";
 import * as actionCreators from "../actionCreators/products.actionCreators";
+import store from "../store";
 
 function* getUserProductsAsync({
   payload,
 }: actionTypes.IGetUserProductsAction) {
   try {
+    if (!payload) {
+      yield put(actionCreators.clearProductsSlice());
+    }
     yield put(actionCreators.setProductsPending());
     const data: IGetProductsResponse = yield call(getUserProducts, payload);
     yield put(actionCreators.setProducts(data));
@@ -59,6 +63,7 @@ function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
   const tempId = Math.random();
 
   try {
+    const { firstName, lastName, id } = store.getState().user.user!;
     yield put(
       actionCreators.addProduct({
         id: tempId,
@@ -66,6 +71,7 @@ function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
         description,
         category,
         price,
+        user: { id, firstName, lastName },
         status: requestStatus.PENDING,
       } as IProduct)
     );
