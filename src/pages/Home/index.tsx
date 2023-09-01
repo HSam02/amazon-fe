@@ -14,8 +14,8 @@ export const Home = () => {
       className={scss.space}
       classNames={{ item: scss.spaceItem }}
     >
-      <Filters setFilters={setFilters}/>
-      <Products filters={filters} />
+      <Filters setFilters={setFilters} />
+      <Products filters={filters || {}} />
     </Space>
   );
 };
