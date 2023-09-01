@@ -19,7 +19,7 @@ export enum adminTools {
 
 export enum sideBarItemsKeys {
   HOME = "/",
-  SEARCH = "search",
+  // SEARCH = "search",
   USER = "user",
   USER_STORE = "/user/store",
   USER_ORDERS = "/user/orders",

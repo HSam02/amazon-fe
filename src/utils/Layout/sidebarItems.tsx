@@ -2,7 +2,7 @@ import {
   UserOutlined,
   ShopOutlined,
   HomeOutlined,
-  SearchOutlined,
+  // SearchOutlined,
   ShoppingOutlined,
   SettingOutlined,
   ShoppingCartOutlined,
@@ -53,11 +53,11 @@ const otherItems: ItemType<MenuItemType>[] = [
     icon: <HomeOutlined />,
     label: "Home",
   },
-  {
-    key: sideBarItemsKeys.SEARCH,
-    icon: <SearchOutlined />,
-    label: "Search",
-  },
+  // {
+  //   key: sideBarItemsKeys.SEARCH,
+  //   icon: <SearchOutlined />,
+  //   label: "Search",
+  // },
   {
     key: sideBarItemsKeys.CART,
     icon: <ShoppingCartOutlined />,
