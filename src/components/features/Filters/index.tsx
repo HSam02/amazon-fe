@@ -41,9 +41,9 @@ export const Filters: React.FC<FiltersProps> = ({ setFilters }) => {
       <Form.Item name="name">
         <Input placeholder="Name" />
       </Form.Item>
-      {/* <Form.Item name="brand">
+      <Form.Item name="brand">
         <Input placeholder="Brand" />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item name="categoryId">
         <TreeSelect
           placeholder="Category"

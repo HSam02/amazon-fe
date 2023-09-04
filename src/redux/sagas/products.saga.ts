@@ -19,9 +19,9 @@ import {
   getUserProducts,
   updateProduct,
 } from "../../services/product.service";
+import store from "../store";
 import * as actionTypes from "../actionTypes/products.actionTypes";
 import * as actionCreators from "../actionCreators/products.actionCreators";
-import store from "../store";
 
 function* getUserProductsAsync({
   payload,
@@ -142,18 +142,14 @@ function* deleteProductAsync({ payload }: actionTypes.IDeleteProductAction) {
   }
 }
 
-// function* watchProducts() {
-//   yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
-//   yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
-//   yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
-//   yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
-//   yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);
-// }
-
-export default function* () {
-  yield takeLatest(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
+function* watchProducts() {
+  yield takeLeading(actionTypes.GET_USER_PRODUCTS, getUserProductsAsync);
   yield takeLatest(actionTypes.GET_ALL_PRODUCTS, getAllProductsAsync);
-  yield takeLatest(actionTypes.CREATE_PRODUCT, createProductAsync);
-  yield takeLatest(actionTypes.UPDATE_PRODUCT, updateProductAsync);
-  yield takeLatest(actionTypes.DELETE_PRODUCT, deleteProductAsync);
+  yield takeEvery(actionTypes.CREATE_PRODUCT, createProductAsync);
+  yield takeEvery(actionTypes.UPDATE_PRODUCT, updateProductAsync);
+  yield takeEvery(actionTypes.DELETE_PRODUCT, deleteProductAsync);
+}
+
+export default function* productsSaga() {
+  yield fork(watchProducts);
 }
