@@ -63,34 +63,47 @@ function* createProductAsync({ payload }: actionTypes.ICreateProductAction) {
   const tempId = Math.random();
 
   try {
-    const { firstName, lastName, id } = store.getState().user.user!;
-    yield put(
-      actionCreators.addProduct({
-        id: tempId,
-        name,
-        description,
-        category,
-        price,
-        user: { id, firstName, lastName },
-        status: requestStatus.PENDING,
-      } as IProduct)
-    );
+    // const { firstName, lastName, id } = store.getState().user.user!;
+    // yield put(
+    //   actionCreators.addProduct({
+    //     id: tempId,
+    //     name,
+    //     description,
+    //     category,
+    //     price,
+    //     user: { id, firstName, lastName },
+    //     status: requestStatus.PENDING,
+    //   } as IProduct)
+    // );
+    const reload =
+      store.getState().products.products &&
+      store.getState().products.products![0].user.id ===
+        store.getState().user.user?.id;
+    if (reload) {
+      yield put(actionCreators.setProductsPending());
+    }
     const product: IProduct = yield call(createProduct, payload);
-    yield put(
-      actionCreators.editProduct({
-        ...product,
-        editingId: tempId,
-        status: requestStatus.SUCCESS,
-      })
-    );
+    // yield put(
+    //   actionCreators.editProduct({
+    //     ...product,
+    //     editingId: tempId,
+    //     status: requestStatus.SUCCESS,
+    //   })
+    // );.
+
+    if (reload) {
+      yield put(actionCreators.clearProductsSlice());
+      yield put(actionCreators.getUserProducts());
+    }
   } catch (error) {
     alert("The Product not added");
-    yield put(
-      actionCreators.editProduct({
-        id: tempId,
-        status: requestStatus.ERROR,
-      })
-    );
+    yield put(actionCreators.setProductsSuccess());
+    // yield put(
+    //   actionCreators.editProduct({
+    //     id: tempId,
+    //     status: requestStatus.ERROR,
+    //   })
+    // );
   }
 }
 
@@ -121,24 +134,27 @@ function* updateProductAsync({ payload }: actionTypes.IUpdateProductAction) {
 
 function* deleteProductAsync({ payload }: actionTypes.IDeleteProductAction) {
   try {
-    yield put(
-      actionCreators.editProduct({
-        id: payload,
-        status: requestStatus.PENDING,
-      })
-    );
+    // yield put(
+    //   actionCreators.editProduct({
+    //     id: payload,
+    //     status: requestStatus.PENDING,
+    //   })
+    // );
+    yield put(actionCreators.setProductsPending());
     const isDeleted: boolean = yield call(deleteProduct, payload);
     if (!isDeleted) {
       throw new Error("The Product not deleted");
     }
-    yield put(actionCreators.removeProduct(payload));
+    yield put(actionCreators.clearProductsSlice());
+    yield put(actionCreators.getUserProducts());
   } catch (error) {
-    yield put(
-      actionCreators.editProduct({
-        id: payload,
-        status: requestStatus.ERROR,
-      })
-    );
+    yield put(actionCreators.setProductsSuccess());
+    // yield put(
+    //   actionCreators.editProduct({
+    //     id: payload,
+    //     status: requestStatus.ERROR,
+    //   })
+    // );
   }
 }
 

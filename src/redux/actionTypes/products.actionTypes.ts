@@ -58,6 +58,11 @@ export interface IRemoveProductAction {
   payload: number;
 }
 
+export const SET_PRODUCTS_SUCCESS = "productsActionTypes/SET_PRODUCTS_SUCCESS";
+export interface ISetProductsSuccessAction {
+  type: typeof SET_PRODUCTS_SUCCESS;
+}
+
 export const SET_PRODUCTS_PENDING = "productsActionTypes/SET_PRODUCTS_PENDING";
 export interface ISetProductsPendingAction {
   type: typeof SET_PRODUCTS_PENDING;
@@ -75,6 +80,7 @@ export interface IClearProductsSliceAction {
 
 export type productsAction =
   | ISetProductsAction
+  | ISetProductsSuccessAction
   | ISetProductsPendingAction
   | ISetProductsErrorAction
   | IAddProductAction

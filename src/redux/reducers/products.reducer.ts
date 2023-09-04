@@ -19,6 +19,13 @@ const productsReducer = (
   action: actions.productsAction
 ): IProductState => {
   switch (action.type) {
+    case actions.SET_PRODUCTS_SUCCESS: {
+      return {
+        ...state,
+        status: requestStatus.SUCCESS,
+      };
+    }
+
     case actions.SET_PRODUCTS_PENDING: {
       return {
         ...state,

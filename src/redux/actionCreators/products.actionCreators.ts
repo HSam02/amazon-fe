@@ -64,6 +64,10 @@ export const removeProduct = (id: number): actions.IRemoveProductAction => ({
   payload: id,
 });
 
+export const setProductsSuccess = (): actions.ISetProductsSuccessAction => ({
+  type: actions.SET_PRODUCTS_SUCCESS,
+});
+
 export const setProductsPending = (): actions.ISetProductsPendingAction => ({
   type: actions.SET_PRODUCTS_PENDING,
 });
