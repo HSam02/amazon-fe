@@ -8,14 +8,13 @@ import {
 } from "../../utils/types/interfaces";
 import Table, { ColumnsType } from "antd/es/table";
 import { AppImage } from "../../components/shared/AppImage";
-import { Button, InputNumber, Space, Typography } from "antd";
+import { Button, Popconfirm, Space, Typography } from "antd";
 import { useEffect } from "react";
 import {
+  deleteCartItem,
   getCart,
-  updateCartItem,
 } from "../../redux/actionCreators/cart.actionCreators";
 import { InputQuantity } from "../../components/features/Cart/InputQuantity";
-import { LoadingIcon } from "../../components/shared/Loading/LoadingIcon";
 import { requestStatus } from "../../utils/types/enums";
 
 type DataType = Omit<ICartItem, "id" | "status"> & { key: number };
@@ -54,9 +53,16 @@ export const Cart = () => {
     },
     {
       title: "Actions",
-      render: (_, record) => (
+      render: (_, { key }) => (
         <Space>
-          <Button type="text">Delete</Button>
+          <Popconfirm
+            title={`Delete Cart Item`}
+            description={`Are you sure to delete this item?`}
+            onConfirm={() => dispatch(deleteCartItem(key))}
+          >
+            <Button type="text">Delete</Button>
+          </Popconfirm>
+
           <Button type="text">Save for later</Button>
         </Space>
       ),
@@ -68,6 +74,7 @@ export const Cart = () => {
   }, []);
   return (
     <Table
+      loading={status === requestStatus.PENDING}
       columns={columns}
       dataSource={cartItems?.map(({ status, id, ...otherData }) => ({
         key: id,
@@ -88,9 +95,7 @@ export const Cart = () => {
             <Typography>{`Subtotal: (${total.count} item${
               data.length > 1 ? "s" : ""
             }): $${total.price}`}</Typography>
-            <Button type="primary" loading={status === requestStatus.PENDING}>
-              Proceed to checkout
-            </Button>
+            <Button type="primary">Proceed to checkout</Button>
           </Space>
         );
       }}
