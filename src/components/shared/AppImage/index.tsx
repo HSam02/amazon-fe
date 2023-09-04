@@ -1,4 +1,5 @@
-import { Image, ImageProps, Skeleton } from "antd";
+import { Image, ImageProps } from "antd";
+import { ReactComponent as EmptyImage } from "../../../assets/EmptyImage.svg";
 import scss from "./AppImage.module.scss";
 
 type AppImageProps = {
@@ -13,9 +14,11 @@ export const AppImage: React.FC<AppImageProps> = ({ url, ...props }) => {
       {...props}
     />
   ) : (
-    <Skeleton.Image
-      rootClassName={scss.rootSkeleton}
-      className={scss.skeleton}
-    />
+    <div
+      className={`${scss.emptyImage} ${scss.image}`}
+      style={{ height: props.height, width: props.width }}
+    >
+      <EmptyImage />
+    </div>
   );
 };

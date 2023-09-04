@@ -22,7 +22,7 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
   return (
     <>
       <Card
-        cover={<AppImage url={product.defaultImg?.url} preview={false} />}
+        cover={<AppImage url={product.defaultImg?.url} preview={false}  />}
         actions={
           product.user.id === user?.id
             ? [

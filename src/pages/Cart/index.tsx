@@ -75,15 +75,19 @@ export const Cart = () => {
       }))}
       pagination={false}
       footer={(data) => {
-        const totalPrice = data.reduce(
-          (acc, { quantity, product }) => acc + quantity * +product.price,
-          0
+        const total = data.reduce(
+          (acc, { quantity, product }) => ({
+            price: acc.price + quantity * +product.price,
+            count: acc.count + quantity,
+          }),
+          { price: 0, count: 0 }
         );
+
         return (
           <Space style={{ width: "100%", justifyContent: "end" }}>
-            <Typography>{`Subtotal: (${data.length} item${
+            <Typography>{`Subtotal: (${total.count} item${
               data.length > 1 ? "s" : ""
-            }): $${totalPrice}`}</Typography>
+            }): $${total.price}`}</Typography>
             <Button type="primary" loading={status === requestStatus.PENDING}>
               Proceed to checkout
             </Button>
