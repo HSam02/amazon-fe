@@ -43,7 +43,10 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
             : undefined
         }
       >
-        <Typography.Text>{product.category?.title}</Typography.Text>
+        <Typography.Text>
+          {product.category?.title} /{" "}
+          <span style={{ color: "#00000073" }}>{product.brand}</span>
+        </Typography.Text>
         <Meta
           title={product.name}
           description={
