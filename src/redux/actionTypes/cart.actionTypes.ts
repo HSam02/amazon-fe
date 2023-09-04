@@ -14,7 +14,7 @@ export interface ICreateCartItemAction {
 export const UPDATE_CART_ITEM = "cartActionTypes/UPDATE_CART_ITEM";
 export interface IUpdateCartItemAction {
   type: typeof UPDATE_CART_ITEM;
-  payload: Omit<ICartItem, "product">;
+  payload: Partial<Omit<ICartItem, "product">>;
 }
 
 export const DELETE_CART_ITEM = "cartActionTypes/DELETE_CART_ITEM";
@@ -26,7 +26,7 @@ export interface IDeleteCartItemAction {
 export const SET_CART = "cartActionTypes/SET_CART";
 export interface ISetCartAction {
   type: typeof SET_CART;
-  payload: ICartItem[];
+  payload?: ICartItem[];
 }
 
 export const SET_CART_PENDING = "cartActionTypes/SET_CART_PENDING";

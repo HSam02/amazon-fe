@@ -8,42 +8,60 @@ import {
 } from "../../utils/types/interfaces";
 import Table, { ColumnsType } from "antd/es/table";
 import { AppImage } from "../../components/shared/AppImage";
-import { Space, Typography } from "antd";
+import { Button, InputNumber, Space, Typography } from "antd";
 import { useEffect } from "react";
-import { getCart } from "../../redux/actionCreators/cart.actionCreators";
+import {
+  getCart,
+  updateCartItem,
+} from "../../redux/actionCreators/cart.actionCreators";
+import { InputQuantity } from "../../components/features/Cart/InputQuantity";
+import { LoadingIcon } from "../../components/shared/Loading/LoadingIcon";
+import { requestStatus } from "../../utils/types/enums";
 
 type DataType = Omit<ICartItem, "id" | "status"> & { key: number };
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Product",
-    dataIndex: "product",
-    render: (product: IProduct) => (
-      <Space>
-        <AppImage width={100} height={100} url={product.defaultImg?.url} />
-        <Typography>{product.name}</Typography>
-      </Space>
-    ),
-  },
-  {
-    title: "Color",
-    dataIndex: "color",
-    render: ({ value }: IColor) => <Typography>{value}</Typography>,
-  },
-  {
-    title: "Size",
-    dataIndex: "size",
-    render: ({ value }: ISize) => <Typography>{value}</Typography>,
-  },
-  {
-    title: "Quantity",
-    dataIndex: "quantity",
-  },
-];
 
 export const Cart = () => {
   const dispatch = useDispatch();
   const { cartItems, status } = useSelector(selectCart);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "Product",
+      dataIndex: "product",
+      render: (product: IProduct) => (
+        <Space>
+          <AppImage width={100} height={100} url={product.defaultImg?.url} />
+          <Typography>
+            {product.name} ${product.price}
+          </Typography>
+        </Space>
+      ),
+    },
+    {
+      title: "Color",
+      dataIndex: "color",
+      render: ({ value }: IColor) => <Typography>{value}</Typography>,
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      render: ({ value }: ISize) => <Typography>{value}</Typography>,
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      render: (value, { key }) => <InputQuantity id={key} quantity={value} />,
+    },
+    {
+      title: "Actions",
+      render: (_, record) => (
+        <Space>
+          <Button type="text">Delete</Button>
+          <Button type="text">Save for later</Button>
+        </Space>
+      ),
+    },
+  ];
 
   useEffect(() => {
     dispatch(getCart());
@@ -56,6 +74,22 @@ export const Cart = () => {
         ...otherData,
       }))}
       pagination={false}
+      footer={(data) => {
+        const totalPrice = data.reduce(
+          (acc, { quantity, product }) => acc + quantity * +product.price,
+          0
+        );
+        return (
+          <Space style={{ width: "100%", justifyContent: "end" }}>
+            <Typography>{`Subtotal: (${data.length} item${
+              data.length > 1 ? "s" : ""
+            }): $${totalPrice}`}</Typography>
+            <Button type="primary" loading={status === requestStatus.PENDING}>
+              Proceed to checkout
+            </Button>
+          </Space>
+        );
+      }}
     />
   );
 };

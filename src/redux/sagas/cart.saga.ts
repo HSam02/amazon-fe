@@ -57,22 +57,22 @@ function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
 }
 
 function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
-  const { id, color, quantity, size } = payload;
+  const { id, quantity } = payload;
   try {
-    yield put(
-      actionCreators.editCartItem({
-        id,
-        status: requestStatus.PENDING,
-      })
-    );
+    if (!id || !quantity) {
+      throw new Error("");
+    }
+    yield put(actionCreators.setCartPending());
+    // yield put(
+    //   actionCreators.editCartItem({
+    //     id,
+    //     status: requestStatus.PENDING,
+    //   })
+    // );
     const { cartItem, success }: ICartUpdateResponse = yield call(
       updateCartItem,
       id,
-      {
-        colorId: color.id,
-        sizeId: size.id,
-        quantity,
-      }
+      { quantity }
     );
     if (!success || !cartItem) {
       throw new Error("The Cart Item not updated");
@@ -80,7 +80,7 @@ function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
     yield put(
       actionCreators.editCartItem({
         ...cartItem,
-        status: requestStatus.ERROR,
+        status: requestStatus.SUCCESS,
       })
     );
   } catch (error) {
@@ -90,6 +90,8 @@ function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
         status: requestStatus.ERROR,
       })
     );
+  } finally {
+    yield put(actionCreators.setCart());
   }
 }
 

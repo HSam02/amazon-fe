@@ -6,14 +6,14 @@ export const getCart = (): actions.IGetCartAction => ({
 });
 
 export const createCartItem = (
-  cartItem: Omit<ICartItem, 'id' | 'status'>
+  cartItem: Omit<ICartItem, "id" | "status">
 ): actions.ICreateCartItemAction => ({
   type: actions.CREATE_CART_ITEM,
   payload: cartItem,
 });
 
 export const updateCartItem = (
-  newData: Omit<ICartItem, "product">
+  newData: Partial<Omit<ICartItem, "product">>
 ): actions.IUpdateCartItemAction => ({
   type: actions.UPDATE_CART_ITEM,
   payload: newData,
@@ -24,7 +24,7 @@ export const deleteCartItem = (id: number): actions.IDeleteCartItemAction => ({
   payload: id,
 });
 
-export const setCart = (cartItems: ICartItem[]): actions.ISetCartAction => ({
+export const setCart = (cartItems?: ICartItem[]): actions.ISetCartAction => ({
   type: actions.SET_CART,
   payload: cartItems,
 });

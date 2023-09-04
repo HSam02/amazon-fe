@@ -33,7 +33,7 @@ const cartReducer = (
 
     case actions.SET_CART: {
       return {
-        cartItems: action.payload,
+        cartItems: action.payload || state.cartItems,
         status: requestStatus.SUCCESS,
       };
     }
