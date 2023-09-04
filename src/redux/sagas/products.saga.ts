@@ -19,9 +19,9 @@ import {
   getUserProducts,
   updateProduct,
 } from "../../services/product.service";
+import store from "../store";
 import * as actionTypes from "../actionTypes/products.actionTypes";
 import * as actionCreators from "../actionCreators/products.actionCreators";
-import store from "../store";
 
 function* getUserProductsAsync({
   payload,
