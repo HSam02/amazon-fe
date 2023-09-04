@@ -20,7 +20,7 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
   const onSubmit = (values: ICreateCartSchema) => {
     const { colorId, quantity, sizeId } = values;
     const color = product.colors.find(({ id }) => id === colorId);
-    const size = product.sizes.find(({ id }) => id === colorId);
+    const size = product.sizes.find(({ id }) => id === sizeId);
     if (!color || !size) {
       return;
     }
@@ -46,8 +46,8 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
               label: color.value,
               value: color.id,
             }))}
-            showSearch
-            allowClear
+            // showSearch
+            // allowClear
           />
         </Form.Item>
         <Form.Item
@@ -61,8 +61,8 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
               label: size.value,
               value: size.id,
             }))}
-            showSearch
-            allowClear
+            // showSearch
+            // allowClear
           />
         </Form.Item>
         <Form.Item name="quantity" rules={[requiredRule]} initialValue={1}>

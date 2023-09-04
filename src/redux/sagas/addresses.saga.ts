@@ -9,6 +9,11 @@ import { IAddress } from "../../utils/types/interfaces";
 import { requestStatus } from "../../utils/types/enums";
 import * as actionCreators from "../actionCreators/addresses.actionCreators";
 import * as actionTypes from "../actionTypes/addresses.actionTypes";
+import store from "../store";
+import {
+  editDefaultAddress,
+  updateDefaultAddress,
+} from "../actionCreators/user.actionCreators";
 
 function* getAddressesAsync() {
   try {
@@ -24,6 +29,9 @@ function* getAddressesAsync() {
 function* createAddressAsync({ payload }: actionTypes.ICreateAddressAction) {
   const tempId = Math.random();
   try {
+    if (store.getState().addresses.addresses?.length === 0) {
+      yield put(editDefaultAddress(tempId));
+    }
     yield put(
       actionCreators.addAddress({
         id: tempId,
@@ -39,6 +47,9 @@ function* createAddressAsync({ payload }: actionTypes.ICreateAddressAction) {
         status: requestStatus.SUCCESS,
       })
     );
+    if (store.getState().addresses.addresses?.length === 1) {
+      yield put(editDefaultAddress(address.id));
+    }
   } catch (error) {
     console.error(error);
     yield put(
@@ -83,6 +94,14 @@ function* deleteAddressAsync({ payload }: actionTypes.IDeleteAddressAction) {
       throw new Error("The Address didn't delete");
     }
     yield put(actionCreators.removeAddress(payload));
+    const addresses = store.getState().addresses.addresses;
+    if (
+      store.getState().user.user?.defaultAddressId === payload &&
+      addresses &&
+      addresses.length > 0
+    ) {
+      yield put(editDefaultAddress(addresses[0].id));
+    }
   } catch (error) {
     console.error(error);
     yield put(

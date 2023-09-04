@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "../components/features/AppLayout";
-import { Login, Register, Admin, Settings, Home } from "../pages/";
+import { Login, Register, Admin, Settings, Home, Cart } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
@@ -17,6 +17,10 @@ const createRouter = ({ user, status }: IUserState) => {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
         },
         {
           path: "/auth",
