@@ -152,9 +152,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         <Form.Item name="colorIds" rules={[requiredRule]}>
           <Select
             placeholder="Colors"
-            options={colors?.map((size) => ({
-              label: size.value,
-              value: size.id,
+            options={colors?.map((color) => ({
+              label: color.value,
+              value: color.id,
             }))}
             showSearch
             allowClear
