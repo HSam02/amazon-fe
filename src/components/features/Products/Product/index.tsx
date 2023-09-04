@@ -23,9 +23,8 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
       <Card
         cover={<AppImage url={product.defaultImg?.url} preview={false} />}
         actions={
-          // product.user.id === user?.id
-            // ? 
-            [
+          product.user.id === user?.id
+            ? [
                 <Button onClick={() => setIsModalOpen(true)}>Edit</Button>,
                 <Popconfirm
                   title="Delete Product"
@@ -35,7 +34,7 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
                   <Button>Delete</Button>
                 </Popconfirm>,
               ]
-            // : [<Button>Add to Cart</Button>, <Button>Buy Later</Button>]
+            : [<Button>Add to Cart</Button>, <Button>Buy Later</Button>]
         }
         loading={product.status === requestStatus.PENDING}
         style={
