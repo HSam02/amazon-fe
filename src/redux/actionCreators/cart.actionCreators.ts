@@ -6,7 +6,7 @@ export const getCart = (): actions.IGetCartAction => ({
 });
 
 export const createCartItem = (
-  cartItem: ICartItem
+  cartItem: Omit<ICartItem, 'id' | 'status'>
 ): actions.ICreateCartItemAction => ({
   type: actions.CREATE_CART_ITEM,
   payload: cartItem,

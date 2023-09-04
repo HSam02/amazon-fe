@@ -8,7 +8,7 @@ export interface IGetCartAction {
 export const CREATE_CART_ITEM = "cartActionTypes/CREATE_CART_ITEM";
 export interface ICreateCartItemAction {
   type: typeof CREATE_CART_ITEM;
-  payload: ICartItem;
+  payload: Omit<ICartItem, "id" | "status">;
 }
 
 export const UPDATE_CART_ITEM = "cartActionTypes/UPDATE_CART_ITEM";

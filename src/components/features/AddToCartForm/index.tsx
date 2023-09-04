@@ -1,6 +1,9 @@
 import { Form, Input, InputNumber, Modal, Select } from "antd";
-import { IProduct } from "../../../utils/types/interfaces";
+import { ICartItem, IProduct } from "../../../utils/types/interfaces";
 import { requiredRule } from "../../../utils/Products/form.rules";
+import { useDispatch } from "react-redux";
+import { ICreateCartSchema } from "../../../utils/Cart/interfaces";
+import { createCartItem } from "../../../redux/actionCreators/cart.actionCreators";
 
 type AddToCartFormProps = {
   product: IProduct;
@@ -12,9 +15,17 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
   onClose,
 }) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (values: any) => {
-    console.log(values);
+  const onSubmit = (values: ICreateCartSchema) => {
+    const { colorId, quantity, sizeId } = values;
+    const color = product.colors.find(({ id }) => id === colorId);
+    const size = product.sizes.find(({ id }) => id === colorId);
+    if (!color || !size) {
+      return;
+    }
+    dispatch(createCartItem({ quantity, color, size, product }));
+    onClose();
   };
 
   const onOk = () => {
@@ -25,7 +36,7 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
     <Modal open closeIcon={false} onOk={onOk} onCancel={onClose}>
       <Form form={form} onFinish={onSubmit}>
         <Form.Item
-          name="colorIds"
+          name="colorId"
           rules={[requiredRule]}
           initialValue={product.colors[0].id}
         >
@@ -40,7 +51,7 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
           />
         </Form.Item>
         <Form.Item
-          name="sizeIds"
+          name="sizeId"
           rules={[requiredRule]}
           initialValue={product.sizes[0].id}
         >
@@ -55,11 +66,7 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
           />
         </Form.Item>
         <Form.Item name="quantity" rules={[requiredRule]} initialValue={1}>
-          <InputNumber
-            placeholder="Quantiy"
-            min={1}
-            max={10}
-          />
+          <InputNumber placeholder="Quantiy" min={1} max={10} />
         </Form.Item>
       </Form>
     </Modal>
