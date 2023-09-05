@@ -1,6 +1,7 @@
 import { ICreateBuyLaterSchema } from "../utils/Cart/interfaces";
-import { buyLaterEndpoints } from "../utils/types/endpoints";
 import { IBuyLaterItem, ISuccessResponse } from "../utils/types/interfaces";
+import { buyLaterEndpoints } from "../utils/types/endpoints";
+import { requestStatus } from "../utils/types/enums";
 import appAxios from "./axios.service";
 
 export const getBuyLater = async () => {
@@ -9,7 +10,7 @@ export const getBuyLater = async () => {
       buyLaterEndpoints.GET_MY
     );
 
-    return data;
+    return data.map((item) => ({ ...item, status: requestStatus.SUCCESS }));
   } catch (error) {
     throw error;
   }

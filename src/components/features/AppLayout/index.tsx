@@ -42,6 +42,10 @@ export const AppLayout = () => {
       return setSelectedKeys(["/"]);
     }
 
+    if (pathname.includes("register")) {
+      return setSelectedKeys([sideBarItemsKeys.SIGN]);
+    }
+
     for (let key in keys) {
       const value = keys[key].slice(1);
       if (value && pathname.includes(value)) {

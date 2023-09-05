@@ -11,10 +11,12 @@ export const BuyLater = () => {
     <Table
       loading={status === requestStatus.PENDING}
       columns={columns}
-      dataSource={buyLaterItems?.map(({ status, id, ...otherData }) => ({
-        key: id,
-        ...otherData,
-      }))}
+      dataSource={buyLaterItems
+        ?.filter(({ status }) => status === requestStatus.SUCCESS)
+        .map(({ status, id, ...otherData }) => ({
+          key: id,
+          ...otherData,
+        }))}
       pagination={false}
     />
   );

@@ -76,7 +76,8 @@ function* createBuyLaterItemAsync({
       localItems.unshift({
         ...payload,
         id: tempId,
-      } as IBuyLaterItem);
+        status: requestStatus.SUCCESS,
+      });
       localStorage.setItem(
         localStorageKeys.BUY_LATER_KEY,
         JSON.stringify(localItems)
@@ -111,12 +112,7 @@ function* deleteBuyLaterItemAsync({
 }: actionTypes.IDeleteBuyLaterItemAction) {
   const isAuthorized = store.getState().user.user;
   try {
-    yield put(
-      actionCreators.editBuyLaterItem({
-        id: payload,
-        status: requestStatus.PENDING,
-      })
-    );
+    yield put(actionCreators.setBuyLaterPending());
     if (!isAuthorized) {
       const localItems: IBuyLaterItem[] = JSON.parse(
         localStorage.getItem(localStorageKeys.BUY_LATER_KEY) || "[]"
@@ -134,12 +130,9 @@ function* deleteBuyLaterItemAsync({
     }
     yield put(actionCreators.removeBuyLaterItem(payload));
   } catch (error) {
-    yield put(
-      actionCreators.editBuyLaterItem({
-        id: payload,
-        status: requestStatus.ERROR,
-      })
-    );
+    alert("The Item not deleted");
+  } finally {
+    yield put(actionCreators.setBuyLater());
   }
 }
 

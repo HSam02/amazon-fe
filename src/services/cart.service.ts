@@ -3,15 +3,16 @@ import {
   ICreateCartSchema,
   IUpdateCartSchema,
 } from "../utils/Cart/interfaces";
-import { cartEndpoints } from "../utils/types/endpoints";
 import { ICartItem, ISuccessResponse } from "../utils/types/interfaces";
+import { cartEndpoints } from "../utils/types/endpoints";
+import { requestStatus } from "../utils/types/enums";
 import appAxios from "./axios.service";
 
 export const getCart = async () => {
   try {
     const { data } = await appAxios.get<ICartItem[]>(cartEndpoints.GET_MY);
 
-    return data;
+    return data.map((item) => ({ ...item, status: requestStatus.SUCCESS }));
   } catch (error) {
     throw error;
   }
