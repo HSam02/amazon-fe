@@ -41,8 +41,8 @@ export const descriptionRules: Rule[] = [
 export const priceRules: Rule[] = [
   requiredRule,
   {
-    pattern: Regexps.ONLY_DIGITS,
-    message: "Please input only digits!",
+    pattern: Regexps.MONEY,
+    message: "Please input valid number!",
   },
   {
     min: 2,

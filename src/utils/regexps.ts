@@ -3,4 +3,5 @@ export class Regexps {
   public static readonly ONLY_LETTERS = /^[A-Za-z]+$/;
   public static readonly ONLY_DIGITS = /^[0-9]*$/;
   public static readonly PASSWORD = /^[A-Za-z\d@$!%*?&]+$/;
+  public static readonly MONEY = /^-?(?!0\d+)\d+$/;
 }
