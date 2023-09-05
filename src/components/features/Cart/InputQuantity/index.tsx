@@ -19,8 +19,6 @@ export const InputQuantity: React.FC<InputQuantityProps> = ({
   const handleChange = (value: number | null) => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      console.log(value);
-      
       value && dispatch(updateCartItem({ id, quantity: value } as ICartItem));
     }, 1500);
   };

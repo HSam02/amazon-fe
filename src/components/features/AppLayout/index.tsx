@@ -46,7 +46,6 @@ export const AppLayout = () => {
       const value = keys[key].slice(1);
       if (value && pathname.includes(value)) {
         setSelectedKeys([keys[key]]);
-        console.log(keys[key]);
         return;
       }
     }

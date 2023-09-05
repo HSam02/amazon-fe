@@ -94,8 +94,8 @@ export const Cart = () => {
         return (
           <Space style={{ width: "100%", justifyContent: "end" }}>
             <Typography>{`Subtotal: (${total.count} item${
-              data.length > 1 ? "s" : ""
-            }): $${total.price}`}</Typography>
+              total.count > 1 ? "s" : ""
+            }) $${total.price}`}</Typography>
             <Button type="primary">Proceed to checkout</Button>
           </Space>
         );
