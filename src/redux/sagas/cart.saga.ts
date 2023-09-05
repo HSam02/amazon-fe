@@ -10,11 +10,36 @@ import {
 } from "../../services/cart.service";
 import { requestStatus } from "../../utils/types/enums";
 import { ICartUpdateResponse } from "../../utils/Cart/interfaces";
+import store from "../store";
+import localStorageKeys from "../../utils/types/localStorageKeys";
 
 function* getCartAsync() {
+  const isAuthorized = store.getState().user.user;
+  if (isAuthorized) {
+    try {
+      yield Promise.all(
+        (
+          JSON.parse(
+            localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
+          ) as ICartItem[]
+        ).map(({ color, product, quantity, size }) =>
+          createCartItem({
+            colorId: color.id,
+            productId: product.id,
+            quantity,
+            sizeId: size.id,
+          })
+        )
+      );
+    } finally {
+      localStorage.removeItem(localStorageKeys.CART_KEY);
+    }
+  }
   try {
     yield put(actionCreators.setCartPending());
-    const data: ICartItem[] = yield call(getCart);
+    const data: ICartItem[] = isAuthorized
+      ? yield call(getCart)
+      : JSON.parse(localStorage.getItem(localStorageKeys.CART_KEY) || "[]");
     yield put(actionCreators.setCart(data));
   } catch (error) {
     yield put(actionCreators.setCartError());
@@ -24,6 +49,7 @@ function* getCartAsync() {
 function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
   const tempId = Math.random();
   const { color, product, quantity, size } = payload;
+  const isAuthorized = store.getState().user.user;
   try {
     yield put(
       actionCreators.addCartItem({
@@ -32,12 +58,31 @@ function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
         status: requestStatus.PENDING,
       })
     );
-    const cartItem: ICartItem = yield call(createCartItem, {
-      quantity,
-      productId: product.id,
-      colorId: color.id,
-      sizeId: size.id,
-    });
+    if (!isAuthorized) {
+      const localItems: ICartItem[] = JSON.parse(
+        localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
+      );
+      localItems.unshift({
+        ...payload,
+        id: tempId,
+      } as ICartItem);
+      localStorage.setItem(
+        localStorageKeys.CART_KEY,
+        JSON.stringify(localItems)
+      );
+    }
+    const cartItem: ICartItem = isAuthorized
+      ? yield call(createCartItem, {
+          quantity,
+          productId: product.id,
+          colorId: color.id,
+          sizeId: size.id,
+        })
+      : {
+          ...payload,
+          id: tempId,
+          status: requestStatus.SUCCESS,
+        };
     yield put(
       actionCreators.editCartItem({
         ...cartItem,
@@ -58,6 +103,7 @@ function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
 
 function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
   const { id, quantity } = payload;
+  const isAuthorized = store.getState().user.user;
   try {
     if (!id || !quantity) {
       throw new Error("");
@@ -69,11 +115,22 @@ function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
     //     status: requestStatus.PENDING,
     //   })
     // );
-    const { cartItem, success }: ICartUpdateResponse = yield call(
-      updateCartItem,
-      id,
-      { quantity }
-    );
+    if (!isAuthorized) {
+      const localItems: ICartItem[] = JSON.parse(
+        localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
+      );
+      localStorage.setItem(
+        localStorageKeys.CART_KEY,
+        JSON.stringify(
+          localItems.map((item) =>
+            item.id === id ? { ...item, quantity } : item
+          )
+        )
+      );
+    }
+    const { cartItem, success }: ICartUpdateResponse = isAuthorized
+      ? yield call(updateCartItem, id, { quantity })
+      : { cartItem: { id, quantity }, success: true };
     if (!success || !cartItem) {
       throw new Error("The Cart Item not updated");
     }
@@ -96,6 +153,7 @@ function* updateCartItemAsync({ payload }: actionTypes.IUpdateCartItemAction) {
 }
 
 function* deleteCartItemAsync({ payload }: actionTypes.IDeleteCartItemAction) {
+  const isAuthorized = store.getState().user.user;
   try {
     yield put(
       actionCreators.editCartItem({
@@ -103,7 +161,18 @@ function* deleteCartItemAsync({ payload }: actionTypes.IDeleteCartItemAction) {
         status: requestStatus.PENDING,
       })
     );
-    const isDeleted: boolean = yield call(deleteCartItem, payload);
+    if (!isAuthorized) {
+      const localItems: ICartItem[] = JSON.parse(
+        localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
+      );
+      localStorage.setItem(
+        localStorageKeys.CART_KEY,
+        JSON.stringify(localItems.filter(({ id }) => id !== payload))
+      );
+    }
+    const isDeleted: boolean = isAuthorized
+      ? yield call(deleteCartItem, payload)
+      : true;
     if (!isDeleted) {
       throw new Error("The Cart Item not deleted");
     }

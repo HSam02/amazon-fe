@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectCart } from "../../redux/selectors";
+import { selectCart, selectUser } from "../../redux/selectors";
 import {
   ICartItem,
   IColor,
@@ -22,6 +22,7 @@ type DataType = Omit<ICartItem, "id" | "status"> & { key: number };
 export const Cart = () => {
   const dispatch = useDispatch();
   const { cartItems, status } = useSelector(selectCart);
+  const { user } = useSelector(selectUser);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -71,7 +72,7 @@ export const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [user]);
   return (
     <Table
       loading={status === requestStatus.PENDING}
