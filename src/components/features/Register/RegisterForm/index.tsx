@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Button, Form, Input, Space } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   confirmRules,
   getEmailRulesWithCheck,
@@ -24,6 +24,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSubmit,
 }) => {
   const [form] = Form.useForm<IRegisterRequest>();
+  const { state } = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,7 +79,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           Register
         </Button>
         <Button>
-          <Link to="/auth/login">Sign In</Link>
+          <Link to="/auth/login" state={state}>
+            Sign In
+          </Link>
         </Button>
       </Space>
     </Form>

@@ -14,30 +14,33 @@ import store from "../store";
 import localStorageKeys from "../../utils/types/localStorageKeys";
 
 function* getCartAsync() {
-  const isAuthorized = store.getState().user.user;
-  if (isAuthorized) {
+  const user = store.getState().user.user;
+  if (user) {
     try {
       yield Promise.all(
         (
           JSON.parse(
             localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
           ) as ICartItem[]
-        ).map(({ color, product, quantity, size }) =>
-          createCartItem({
-            colorId: color.id,
-            productId: product.id,
-            quantity,
-            sizeId: size.id,
-          })
+        ).map(
+          ({ color, product, quantity, size }) =>
+            user.id !== product.user.id &&
+            createCartItem({
+              colorId: color.id,
+              productId: product.id,
+              quantity,
+              sizeId: size.id,
+            })
         )
       );
+    } catch (error) {
     } finally {
       localStorage.removeItem(localStorageKeys.CART_KEY);
     }
   }
   try {
     yield put(actionCreators.setCartPending());
-    const data: ICartItem[] = isAuthorized
+    const data: ICartItem[] = user
       ? yield call(getCart)
       : JSON.parse(localStorage.getItem(localStorageKeys.CART_KEY) || "[]");
     yield put(actionCreators.setCart(data));

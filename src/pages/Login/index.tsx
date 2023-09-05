@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Input, Space } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { emailRules, passwordRules } from "../../utils/Auth/form.rules";
 import { requestStatus } from "../../utils/types/enums";
 import { ILoginRequest } from "../../utils/Auth/interfaces";
@@ -14,6 +14,7 @@ import scss from "./Login.module.scss";
 
 export const Login = () => {
   const [form] = Form.useForm();
+  const { state } = useLocation();
 
   const dispatch = useDispatch();
   const { status } = useSelector(selectUser);
@@ -68,7 +69,9 @@ export const Login = () => {
               Log In
             </Button>
             <Button>
-              <Link to="/auth/register">Sign Up</Link>
+              <Link to="/auth/register" state={state}>
+                Sign Up
+              </Link>
             </Button>
           </Space>
         </Form>

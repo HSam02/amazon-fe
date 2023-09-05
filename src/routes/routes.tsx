@@ -28,7 +28,6 @@ const createRouter = ({ user, status }: IUserState) => {
             <ProtectedRoute
               isAllowed={user === null}
               isLoading={isUserLoading}
-              redirectPath="/"
             />
           ),
           children: [
@@ -60,7 +59,7 @@ const createRouter = ({ user, status }: IUserState) => {
             <ProtectedRoute
               isAllowed={user !== null}
               isLoading={isUserLoading}
-              redirectPath="/"
+              redirectPath="/auth/login"
             />
           ),
           children: [

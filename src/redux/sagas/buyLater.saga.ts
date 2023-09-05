@@ -12,29 +12,32 @@ import store from "../store";
 import localStorageKeys from "../../utils/types/localStorageKeys";
 
 function* getBuyLaterAsync() {
-  const isAuthorized = store.getState().user.user;
-  if (isAuthorized) {
+  const user = store.getState().user.user;
+  if (user) {
     try {
       yield Promise.all(
         (
           JSON.parse(
             localStorage.getItem(localStorageKeys.BUY_LATER_KEY) || "[]"
           ) as IBuyLaterItem[]
-        ).map(({ color, product, size }) =>
-          createBuyLaterItem({
-            colorId: color.id,
-            productId: product.id,
-            sizeId: size.id,
-          })
+        ).map(
+          ({ color, product, size }) =>
+            user.id !== product.user.id &&
+            createBuyLaterItem({
+              colorId: color.id,
+              productId: product.id,
+              sizeId: size.id,
+            })
         )
       );
+    } catch (error) {
     } finally {
       localStorage.removeItem(localStorageKeys.BUY_LATER_KEY);
     }
   }
   try {
     yield put(actionCreators.setBuyLaterPending());
-    const data: IBuyLaterItem[] = isAuthorized
+    const data: IBuyLaterItem[] = user
       ? yield call(getBuyLater)
       : JSON.parse(
           localStorage.getItem(localStorageKeys.BUY_LATER_KEY) || "[]"
