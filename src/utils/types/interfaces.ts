@@ -72,3 +72,11 @@ export interface ICartItem {
   quantity: number;
   status: requestStatus;
 }
+
+export interface IBuyLaterItem {
+  id: number;
+  product: Omit<IProduct, "status">;
+  size: Omit<ISize, "status">;
+  color: Omit<IColor, "status">;
+  status: requestStatus;
+}

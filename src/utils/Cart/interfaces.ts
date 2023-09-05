@@ -16,3 +16,9 @@ export interface ICartUpdateResponse {
   cartItem: ICartItem;
   success: boolean;
 }
+
+export interface ICreateBuyLaterSchema {
+  productId: number;
+  sizeId: number;
+  colorId: number;
+}
