@@ -9,6 +9,7 @@ import { IProduct } from "../../../../utils/types/interfaces";
 import { requestStatus } from "../../../../utils/types/enums";
 import { deleteProduct } from "../../../../redux/actionCreators/products.actionCreators";
 import { selectUser } from "../../../../redux/selectors";
+import { AddToBuyLaterForm } from "../../AddToBuyLaterForm";
 
 type ProductProps = {
   product: IProduct;
@@ -18,11 +19,12 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [isAddToCartOpen, setIsAddToCartOpen] = useState(false);
+  const [isAddToBuyLaterOpen, setIsAddToBuyLaterOpen] = useState(false);
   const { user } = useSelector(selectUser);
   return (
     <>
       <Card
-        cover={<AppImage url={product.defaultImg?.url} preview={false}  />}
+        cover={<AppImage url={product.defaultImg?.url} preview={false} />}
         actions={
           product.user.id === user?.id
             ? [
@@ -39,7 +41,9 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
                 <Button onClick={() => setIsAddToCartOpen(true)}>
                   Add to Cart
                 </Button>,
-                <Button>Buy Later</Button>,
+                <Button onClick={() => setIsAddToBuyLaterOpen(true)}>
+                  Buy Later
+                </Button>,
               ]
         }
         loading={product.status === requestStatus.PENDING}
@@ -61,7 +65,7 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
             </Typography.Text>
           }
         />
-        <Typography.Text>{product.price}</Typography.Text>
+        <Typography.Text>${product.price}</Typography.Text>
       </Card>
       {isEditing && (
         <ProductForm onClose={() => setIsEditing(false)} product={product} />
@@ -70,6 +74,12 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
         <AddToCartForm
           product={product}
           onClose={() => setIsAddToCartOpen(false)}
+        />
+      )}
+      {isAddToBuyLaterOpen && (
+        <AddToBuyLaterForm
+          product={product}
+          onClose={() => setIsAddToBuyLaterOpen(false)}
         />
       )}
     </>

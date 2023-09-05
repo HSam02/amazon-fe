@@ -6,6 +6,7 @@ import colorsReducer from "./colors.reducer";
 import addressesReducer from "./addresses.reducer";
 import productsReducer from "./products.reducer";
 import cartReducer from "./cart.reducer";
+import buyLaterReducer from "./buyLater.reducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   addresses: addressesReducer,
   products: productsReducer,
   cart: cartReducer,
+  buyLater: buyLaterReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

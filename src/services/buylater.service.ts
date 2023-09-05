@@ -1,4 +1,4 @@
-import { ICreateCartSchema } from "../utils/Cart/interfaces";
+import { ICreateBuyLaterSchema } from "../utils/Cart/interfaces";
 import { buyLaterEndpoints } from "../utils/types/endpoints";
 import { IBuyLaterItem, ISuccessResponse } from "../utils/types/interfaces";
 import appAxios from "./axios.service";
@@ -15,7 +15,7 @@ export const getBuyLater = async () => {
   }
 };
 
-export const createBuyLaterItem = async (reqData: ICreateCartSchema) => {
+export const createBuyLaterItem = async (reqData: ICreateBuyLaterSchema) => {
   try {
     const { data } = await appAxios.post<IBuyLaterItem>(
       buyLaterEndpoints.CREATE,

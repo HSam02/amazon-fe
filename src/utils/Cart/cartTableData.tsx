@@ -37,7 +37,9 @@ export const columns: ColumnsType<DataType> = [
   },
   {
     title: "Actions",
-    render: (_, { key }) => <CartItemActions id={key} />,
+    render: (_, { key, ...otherData }) => (
+      <CartItemActions item={{ id: key, ...otherData }} />
+    ),
   },
 ];
 

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import Table from "antd/es/table";
-import { columns, getFooter } from "../../../../utils/Cart/tableData";
+import { columns, getFooter } from "../../../../utils/Cart/cartTableData";
 import { requestStatus } from "../../../../utils/types/enums";
 import { selectCart } from "../../../../redux/selectors";
 

@@ -62,6 +62,16 @@ function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
       const localItems: ICartItem[] = JSON.parse(
         localStorage.getItem(localStorageKeys.CART_KEY) || "[]"
       );
+      if (
+        localItems.some(
+          (item) =>
+            item.color.id === color.id &&
+            item.product.id === product.id &&
+            item.size.id === size.id
+        )
+      ) {
+        throw new Error("");
+      }
       localItems.unshift({
         ...payload,
         id: tempId,
@@ -92,12 +102,7 @@ function* createCartItemAsync({ payload }: actionTypes.ICreateCartItemAction) {
     );
   } catch (error) {
     alert("The Cart Item not added");
-    yield put(
-      actionCreators.editCartItem({
-        id: tempId,
-        status: requestStatus.ERROR,
-      })
-    );
+    yield put(actionCreators.removeCartItem(tempId));
   }
 }
 

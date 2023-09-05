@@ -1,30 +1,30 @@
 import { useDispatch } from "react-redux";
-import { Form, InputNumber, Modal, Select } from "antd";
+import { Form, Modal, Select } from "antd";
 import { IProduct } from "../../../utils/types/interfaces";
-import { ICreateCartSchema } from "../../../utils/Cart/interfaces";
+import { ICreateBuyLaterSchema } from "../../../utils/Cart/interfaces";
 import { requiredRule } from "../../../utils/Products/form.rules";
-import { createCartItem } from "../../../redux/actionCreators/cart.actionCreators";
+import { createBuyLaterItem } from "../../../redux/actionCreators/buyLater.actionCreators";
 
-type AddToCartFormProps = {
+type AddToBuyLaterFormProps = {
   product: IProduct;
   onClose: () => void;
 };
 
-export const AddToCartForm: React.FC<AddToCartFormProps> = ({
+export const AddToBuyLaterForm: React.FC<AddToBuyLaterFormProps> = ({
   product,
   onClose,
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const onSubmit = (values: ICreateCartSchema) => {
-    const { colorId, quantity, sizeId } = values;
+  const onSubmit = (values: ICreateBuyLaterSchema) => {
+    const { colorId, sizeId } = values;
     const color = product.colors.find(({ id }) => id === colorId);
     const size = product.sizes.find(({ id }) => id === sizeId);
     if (!color || !size) {
       return;
     }
-    dispatch(createCartItem({ quantity, color, size, product }));
+    dispatch(createBuyLaterItem({ color, size, product }));
     onClose();
   };
 
@@ -60,9 +60,6 @@ export const AddToCartForm: React.FC<AddToCartFormProps> = ({
               value: size.id,
             }))}
           />
-        </Form.Item>
-        <Form.Item name="quantity" rules={[requiredRule]} initialValue={1}>
-          <InputNumber placeholder="Quantiy" min={1} max={10} />
         </Form.Item>
       </Form>
     </Modal>
