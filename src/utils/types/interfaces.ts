@@ -80,3 +80,15 @@ export interface IBuyLaterItem {
   color: Omit<IColor, "status">;
   status: requestStatus;
 }
+
+export interface IOrder {
+  id: number;
+  address: string;
+  products: Array<
+    Pick<IProduct, "id" | "name" | "price" | "defaultImg"> & {
+      quantity: number;
+      size: string;
+      color: string;
+    }
+  >;
+}
