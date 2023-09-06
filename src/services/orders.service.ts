@@ -1,11 +1,17 @@
-import { ICreateOrderSchema } from "../utils/Orders/interfaces";
+import {
+  ICreateOrderSchema,
+  IGetOrdersResponse,
+} from "../utils/Orders/interfaces";
+import { IOrder, IPagination } from "../utils/types/interfaces";
 import { orderEndpoints } from "../utils/types/endpoints";
-import { IOrder } from "../utils/types/interfaces";
 import appAxios from "./axios.service";
 
-export const getOrders = async () => {
+export const getOrders = async (params?: IPagination) => {
   try {
-    const { data } = await appAxios.get<IOrder[]>(orderEndpoints.GET_MY);
+    const { data } = await appAxios.get<IGetOrdersResponse>(
+      orderEndpoints.GET_MY,
+      { params }
+    );
 
     return data;
   } catch (error) {
