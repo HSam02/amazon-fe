@@ -1,10 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "../components/features/AppLayout";
-import { Login, Register, Admin, Settings, Home, Cart } from "../pages/";
+import {
+  Login,
+  Register,
+  Admin,
+  Settings,
+  Home,
+  Cart,
+  MyStore,
+  MakeOrder,
+} from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
 import { requestStatus, roles } from "../utils/types/enums";
-import { MyStore } from "../pages/MyStore";
 
 const createRouter = ({ user, status }: IUserState) => {
   const isUserLoading =
@@ -72,6 +80,18 @@ const createRouter = ({ user, status }: IUserState) => {
               element: <MyStore />,
             },
           ],
+        },
+        {
+          path: "/make-order",
+          element: (
+            <ProtectedRoute
+              isAllowed={user !== null}
+              isLoading={isUserLoading}
+              redirectPath="/auth/login"
+            >
+              <MakeOrder />
+            </ProtectedRoute>
+          ),
         },
       ],
     },

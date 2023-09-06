@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Space, Typography } from "antd";
 import { CartItemActions } from "../../components/features/Cart/CartTable/CartItemActions";
 import { AppImage } from "../../components/shared/AppImage";
@@ -46,10 +46,7 @@ export const columns: ColumnsType<DataType> = [
   },
 ];
 
-export const Footer = ({ data }: { data: readonly DataType[] }) => {
-  const navigate = useNavigate();
-  const { user } = useSelector(selectUser);
-
+export const getFooter = (data: readonly DataType[]) => {
   const total = data.reduce(
     (acc, { quantity, product }) => ({
       price: acc.price + quantity * +product.price,
@@ -58,20 +55,15 @@ export const Footer = ({ data }: { data: readonly DataType[] }) => {
     { price: 0, count: 0 }
   );
 
-  const handleClick = () => {
-    if (user) {
-    } else {
-      navigate("/auth/register");
-    }
-  };
-
   return (
     <Space style={{ width: "100%", justifyContent: "end" }}>
       <Typography>{`Subtotal: (${total.count} item${
         total.count > 1 ? "s" : ""
       }) $${total.price}`}</Typography>
-      <Button onClick={handleClick} type="primary" disabled={data.length === 0}>
-        Proceed to checkout
+      <Button type="primary" disabled={data.length === 0}>
+        <Link to="/make-order" replace>
+          Proceed to checkout
+        </Link>
       </Button>
     </Space>
   );

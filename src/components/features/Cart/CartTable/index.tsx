@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import Table from "antd/es/table";
-import { columns, Footer } from "../../../../utils/Cart/cartTableData";
+import { columns, getFooter } from "../../../../utils/Cart/cartTableData";
 import { requestStatus } from "../../../../utils/types/enums";
 import { selectCart } from "../../../../redux/selectors";
 
@@ -18,7 +18,7 @@ export const CartTable = () => {
           ...otherData,
         }))}
       pagination={false}
-      footer={(data) => <Footer data={data} />}
+      footer={(data) => getFooter(data)}
     />
   );
 };

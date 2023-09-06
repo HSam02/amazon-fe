@@ -46,6 +46,10 @@ export const AppLayout = () => {
       return setSelectedKeys([sideBarItemsKeys.SIGN]);
     }
 
+    if (pathname.includes("make-order")) {
+      return setSelectedKeys([]);
+    }
+
     for (let key in keys) {
       const value = keys[key].slice(1);
       if (value && pathname.includes(value)) {
