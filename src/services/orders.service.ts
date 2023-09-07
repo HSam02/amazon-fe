@@ -19,15 +19,15 @@ export const getOrders = async (params?: IPagination) => {
   }
 };
 
-export const createOrder = async (reqData: ICreateOrderSchema) => {
-  try {
-    const { data } = await appAxios.post<IOrder>(
-      orderEndpoints.CREATE,
-      reqData
-    );
+// export const createOrder = async (reqData: ICreateOrderSchema) => {
+//   try {
+//     const { data } = await appAxios.post<IOrder>(
+//       orderEndpoints.CREATE,
+//       reqData
+//     );
 
-    return data;
-  } catch (error) {
-    throw error;
-  }
-};
+//     return data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };

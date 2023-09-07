@@ -61,3 +61,7 @@ export enum orderEndpoints {
   GET_MY = "/order",
   CREATE = "/order",
 }
+
+export enum paymentEndpoints {
+  CREATE = "/create-payment-intent",
+}
