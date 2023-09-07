@@ -56,6 +56,10 @@ export interface IProduct {
   sizes: Omit<ISize, "status">[];
   colors: Omit<IColor, "status">[];
   status: requestStatus;
+  statistic?: {
+    totalCount: number;
+    totalPrice: number;
+  };
 }
 
 export interface IPagination {

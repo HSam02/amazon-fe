@@ -65,7 +65,13 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
             </Typography.Text>
           }
         />
-        <Typography.Text>${product.price}</Typography.Text>
+        <Typography>${product.price}</Typography>
+        {product.statistic && (
+          <Typography.Text>
+            Total count: {product.statistic.totalCount}, Total earning: $
+            {product.statistic.totalPrice}
+          </Typography.Text>
+        )}
       </Card>
       {isEditing && (
         <ProductForm onClose={() => setIsEditing(false)} product={product} />
