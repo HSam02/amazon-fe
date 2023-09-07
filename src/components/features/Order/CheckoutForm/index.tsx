@@ -14,6 +14,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -23,12 +24,12 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess }) => {
     }
 
     try {
+      setIsLoading(true);
       const result = await stripe.confirmPayment({
         elements,
         redirect: "if_required",
       });
 
-      console.log(result);
       if (result.error) {
         setError(result.error.message || "Error");
       } else {
@@ -37,6 +38,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess }) => {
     } catch (error) {
       console.error("Error:", error);
       setError("An error occurred while processing the payment.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,7 +49,12 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess }) => {
         <label htmlFor="card-element">Credit or Debit Card</label>
         <PaymentElement />
       </div>
-      <Button style={{ margin: "12px 0" }} type="primary" htmlType="submit">
+      <Button
+        style={{ margin: "12px 0" }}
+        type="primary"
+        htmlType="submit"
+        loading={isLoading}
+      >
         Pay
       </Button>
       {error && <div style={{ color: "red" }}>{error}</div>}

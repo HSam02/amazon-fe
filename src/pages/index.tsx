@@ -6,3 +6,4 @@ export { Settings } from "./Settings";
 export { Cart } from "./Cart";
 export { MyStore } from "./MyStore";
 export { MakeOrder } from "./MakeOrder";
+export { MyOrders } from "./MyOrders";

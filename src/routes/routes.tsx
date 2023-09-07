@@ -9,6 +9,7 @@ import {
   Cart,
   MyStore,
   MakeOrder,
+  MyOrders,
 } from "../pages/";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { IUserState } from "../redux/reducers/user.reducer";
@@ -71,6 +72,10 @@ const createRouter = ({ user, status }: IUserState) => {
             />
           ),
           children: [
+            {
+              path: "orders",
+              element: <MyOrders />,
+            },
             {
               path: "settings",
               element: <Settings />,
