@@ -96,3 +96,15 @@ export interface IOrder {
     }
   >;
 }
+
+export type ITranslationKeys  ={
+  home: string;
+  cart: string;
+  my_profile: string;
+  my_store: string;
+  my_orders: string;
+  settings: string;
+  admin: string;
+  sign: string;
+  add_product: string;
+}

@@ -1,0 +1,14 @@
+{
+  "home": "Home",
+  "cart": "Cart",
+  "my_profile": "My Profile",
+  "my_store": "My Store",
+  "my_orders": "My Orders",
+  "settings": "Settings",
+  "admin": "Admin",
+  "sign": "Sign In/Up",
+  "add_product": "Add Product",
+  "navbar": {
+    "asa": "asas"
+  }
+}

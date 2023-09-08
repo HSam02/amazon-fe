@@ -6,33 +6,39 @@ import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { PlusOutlined } from "@ant-design/icons";
 import { ProductForm } from "../ProductForm";
-import getSideBarItems from "../../../utils/Layout/sidebarItems";
+import useSideBarItems from "../../../utils/Layout/sidebarItems";
 import { roles, sideBarItemsKeys } from "../../../utils/types/enums";
 import { selectUser } from "../../../redux/selectors";
+import { useTranslation } from "react-i18next";
 
 export const AppLayout = () => {
   const { user } = useSelector(selectUser);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { t } = useTranslation();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const items = useMemo(() => {
-    const items = getSideBarItems(user ? user.role : roles.GUEST);
-    if (user && user.role !== roles.GUEST) {
-      items.push({
-        key: "add",
-        icon: <PlusOutlined />,
-        label: "Add Product",
+  const sBItems = useSideBarItems(user ? user.role : roles.GUEST);
 
-        onClick: (e) => {
-          e.domEvent.preventDefault();
-          setIsModalOpen(true);
+  const items = useMemo(() => {
+    if (user && user.role !== roles.GUEST) {
+      return [
+        ...sBItems,
+        {
+          key: "add",
+          icon: <PlusOutlined />,
+          label: t("add_product"),
+
+          onClick: (e: any) => {
+            e.domEvent.preventDefault();
+            setIsModalOpen(true);
+          },
         },
-      });
+      ];
     }
-    return items;
-  }, [user]);
+    return sBItems;
+  }, [user, t]);
 
   useEffect(() => {
     const keys = Object(sideBarItemsKeys) as { [key: string]: string };

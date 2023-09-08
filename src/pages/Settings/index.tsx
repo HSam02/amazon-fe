@@ -1,8 +1,10 @@
-import { Button, Tabs, TabsProps } from "antd";
+import { useState } from "react";
+import { Button, Space, Tabs, TabsProps } from "antd";
+import { GlobalOutlined } from "@ant-design/icons";
 import { Addresses } from "../../components/features/User/Addresses";
 import { ChangePassword } from "../../components/features/User/ChangePassword";
 import { LogOut } from "../../components/features/User/LogOut";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const items: TabsProps["items"] = [
   {
@@ -19,6 +21,8 @@ const items: TabsProps["items"] = [
 
 export const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { i18n } = useTranslation();
+
   return (
     <>
       <Tabs
@@ -27,13 +31,25 @@ export const Settings = () => {
         items={items}
         style={{ height: "100%" }}
         tabBarExtraContent={
-          <Button
-            onClick={() => setIsOpen(true)}
-            danger
-            style={{ marginBottom: 20 }}
-          >
-            Log out
-          </Button>
+          <Space direction="vertical" align="center">
+            <Button onClick={() => setIsOpen(true)} danger>
+              Log out
+            </Button>
+            <Space style={{ marginBottom: 20 }}>
+              <Button
+                onClick={() => i18n.changeLanguage("en")}
+                icon={<GlobalOutlined />}
+              >
+                EN
+              </Button>
+              <Button
+                onClick={() => i18n.changeLanguage("ru")}
+                icon={<GlobalOutlined />}
+              >
+                RU
+              </Button>
+            </Space>
+          </Space>
         }
       />
       {isOpen && <LogOut onClose={() => setIsOpen(false)} />}
